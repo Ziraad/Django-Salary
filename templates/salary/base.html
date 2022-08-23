@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa-IR" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block extra_headers %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'salary/css/output.css' %}">
+{#    <link rel="stylesheet" href="../../salary/static/salary/css/output.css">#}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+{% include 'salary/partials/header.html' %}
+
+{% comment %} <script src="{% static 'js/tw-elements.js' %}"></script> {% endcomment %}
+{% block body %}{% endblock %}
+
+
+<script src="{% static 'salary/js/tw-element-index.min.js' %}"></script>
+{% block extra_js %}{% endblock %}
+{% include 'salary/partials/footer.html' %}
+</body>
+</html>

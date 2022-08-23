@@ -1,0 +1,388 @@
+{% extends 'salary/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block head %}
+    {% block extra_headers %}
+        <title>محسابه حقوق و دستمزد رایگان</title>
+    {% endblock %}
+{% endblock %}
+
+{% block title %}{{ super }} حقوق و دستمزد آنلاین {% endblock %}
+{% block body %}
+    <div class="container my-24 px-6 mx-auto">
+        <section class="mb-32 text-gray-800 text-center md:text-right">
+            <h2 class="text-3xl font-bold mb-12 text-center">محاسبه فیش حقوق</h2>
+            <div class="block flex-model mx-auto p-6 border rounded-lg shadow-lg bg-white max-w-4xl">
+
+                <form class="" method="post">
+                    {% csrf_token %}
+                    {% if error %}
+                        <div class="bg-red-100 rounded-lg py-5 px-6 mb-3 text-base text-red-700 inline-flex items-center w-full"
+                             role="alert">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times-circle"
+                                 class="w-4 h-4 ml-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg"
+                                 viewBox="0 0 512 512">
+                                <path fill="currentColor"
+                                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"></path>
+                            </svg>
+                            {{ error }}
+                        </div>
+                    {% endif %}
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="form-group mb-6">
+                            <label for="first_name">نام</label>
+                            <input type="text"
+                                   class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                   id="first_name"
+                                   name="first_name"
+                                   value="{{ first_name }}"
+                                   aria-describedby="emailHelp123">
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="last_name">نام خانوادگی</label>
+                            <input type="text"
+                                   class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                   id="last_name"
+                                   name="last_name"
+                                   value="{{ last_name }}"
+                                   aria-describedby="emailHelp124">
+                        </div>
+                        <div class="flex justify-center">
+                            <div class="mb-3 xl:w-96">
+                                <label for="last_name">ماه</label>
+                                <select class="form-select appearance-none block w-full px-3 py-1.5 font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                        name="month_name" aria-label="Default select example">
+                                    {% if month_name %}
+                                        <option value="{{ month_name }}" selected>{{ month_name }}</option>
+{#                                        <option value="فروردین">فروردین</option>#}
+                                    {% else %}
+                                        <option value="فروردین" selected>فروردین</option>
+                                    {% endif %}
+                                    <option value="اردیبهشت">اردیبهشت</option>
+                                    <option value="خرداد">خرداد</option>
+                                    <option value="تیر">تیر</option>
+                                    <option value="مرداد">مرداد</option>
+                                    <option value="شهریور">شهریور</option>
+                                    <option value="مهر">مهر</option>
+                                    <option value="آبان">آبان</option>
+                                    <option value="آذر">آذر</option>
+                                    <option value="دی">دی</option>
+                                    <option value="بهمن">بهمن</option>
+                                    <option value="اسفند">اسفند</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="year">سال</label>
+                            {% if year %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="year"
+                                       maxlength="4"
+                                       name="year"
+                                       value="{{ year }}"
+                                       aria-describedby="emailHelp124">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="year"
+                                       maxlength="4"
+                                       name="year"
+                                       value="{{ base_info.year }}"
+                                       aria-describedby="emailHelp124">
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="company">نام شرکت یا کارگاه</label>
+                            <input type="text"
+                                   class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                   id="company"
+                                   name="company"
+                                   value="{{ company }}"
+                                   aria-describedby="emailHelp124">
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="base_salary">دستمزد روزانه</label>
+                            {% if base_salary %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="base_salary"
+                                       name="base_salary"
+                                       value="{{ base_salary }}"
+                                       aria-describedby="emailHelp123">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="base_salary"
+                                       name="base_salary"
+                                       value="{{ base_info.base_salary }}"
+                                       aria-describedby="emailHelp123">
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="working_days">روزهای کارکرد</label>
+                            {% if working_days %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="working_days"
+                                       min="0"
+                                       max="31"
+                                       maxlength="2"
+                                       name="working_days"
+                                       value="{{ working_days }}"
+                                       aria-describedby="emailHelp123">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="working_days"
+                                       min="0"
+                                       max="31"
+                                       maxlength="2"
+                                       name="working_days"
+                                       value="0"
+                                       aria-describedby="emailHelp123">
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="overtime">اضافه کاری</label>
+                            {% if overtime %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="overtime"
+                                       name="overtime"
+                                       min="0"
+                                       value="{{ overtime }}"
+                                       aria-describedby="emailHelp124">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="overtime"
+                                       name="overtime"
+                                       min="0"
+                                       value="0"
+                                       aria-describedby="emailHelp124">
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="closed_work">تعطیل کاری</label>
+                            {% if closed_work %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="closed_work"
+                                       name="closed_work"
+                                       min="0"
+                                       value="{{ closed_work }}"
+                                       aria-describedby="emailHelp123">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="closed_work"
+                                       name="closed_work"
+                                       min="0"
+                                       value="0"
+                                       aria-describedby="emailHelp123">
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="mission">مأموریت</label>
+                            {% if mission %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="mission"
+                                       name="mission"
+                                       min="0"
+                                       max="31"
+                                       value="{{ mission }}"
+                                       aria-describedby="mission">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="mission"
+                                       name="mission"
+                                       min="0"
+                                       max="31"
+                                       value="0"
+                                       aria-describedby="mission">
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="reward">پاداش</label>
+                            {% if reward %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="reward"
+                                       name="reward"
+                                       min="0"
+                                       value="{{ reward }}"
+                                       aria-describedby="emailHelp123">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="reward"
+                                       name="reward"
+                                       min="0"
+                                       value="0"
+                                       aria-describedby="emailHelp123">
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="number_of_children">تعداد فرزندان مشمول</label>
+                            {% if number_of_children %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="number_of_children"
+                                       name="number_of_children"
+                                       min="0"
+                                       value="{{ number_of_children }}"
+                                       aria-describedby="emailHelp124">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="number_of_children"
+                                       name="number_of_children"
+                                       min="0"
+                                       value="0"
+                                       aria-describedby="emailHelp124">
+                            {% endif %}
+                        </div>
+                        <div class="flex justify-center items-center gap-2 form-group form-check text-center mb-6">
+                            <input type="checkbox"
+                                   class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
+                                   id="right_to_house" name="right_to_house" checked>
+                            <label class="form-check-label inline-block text-gray-800" for="right_to_house">حق
+                                مسکن</label>
+                        </div>
+                        <div class="flex justify-center items-center gap-2 form-group form-check text-center mb-6">
+                            <input type="checkbox"
+                                   class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
+                                   id="right_to_grocery" name="right_to_grocery" value="1" checked>
+                            <label class="form-check-label inline-block text-gray-800" for="right_to_grocery">حق خوار و
+                                بار</label>
+                        </div>
+                    </div>
+                    <button type="submit"
+                            class="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                        محاسبه کن
+                    </button>
+                </form>
+            </div>
+
+            <section class="my-32 text-gray-800 text-center md:text-right">
+                <h2 class="text-3xl font-bold mb-12 text-center">فیش حقوقی شما</h2>
+                <div class="block mx-auto p-6 border rounded-lg shadow-lg bg-white max-w-4xl">
+                    <div class="flex flex-col">
+                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                                <div class="overflow-hidden">
+                                    <div class="font-bold text-gray-900 text-center my-2 p-2">
+                                        <div class="mb-4">
+                                            <span>فیش حقوقی</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <span>شرکت {{ company }}</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <span>{{ month_name }} {{ year }}</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <span>
+                                                {{ first_name }} {{ last_name }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <table class="min-w-full border text-center">
+                                        <thead class="border-b">
+
+                                        </thead>
+                                        <tbody>
+                                        <tr class="border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                حقوق ماهیانه
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                                                {{ calculate_salary.monthly_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                اضافه کاری
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.overtime_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                تعطیل کاری
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.closed_work_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                مأموریت
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.mission_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                حق خوار و بار
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.right_of_grocery | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                حق مسکن
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.right_of_house | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                حق اولاد
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.right_of_children | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-900 border-r">
+                                                جمع حقوق و دستمزد ناخالص
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-green-500 font-black px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.sub_total_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+    </div>
+{% endblock %}

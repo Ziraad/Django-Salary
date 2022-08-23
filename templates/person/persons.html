@@ -1,0 +1,262 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+{% block head %}
+    {% block extra_headers %}
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <link rel="stylesheet" href="{% static 'salary/css/output.css' %}">
+            <title>حقوق و دستمزد - داشبورد</title>
+            <link
+                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+                    rel="stylesheet"
+            />
+            <script
+                    src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+                    defer
+            ></script>
+            <script src="{% static 'salary/js/init-alpine.js' %}"></script>
+            <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+            />
+            <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                    defer
+            ></script>
+            <script src=".{% static 'salary/js/charts-lines.js' %}" defer></script>
+            <script src="{% static 'salary/js/charts-pie.js' %}" defer></script>
+        </head>
+    {% endblock %}
+{% endblock %}
+{% block title %}{{ super }} داشبورد {% endblock %}
+{% block body %}
+    <div class="flex flex-col flex-1 w-full">
+        <h2
+                class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+        >
+            پرسنل
+        </h2>
+        <div class="w-40 my-8">
+            <a href="{% url 'person:add_person' %}"
+               class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+                تعریف پرسنل جدید
+                <span class="mr-2" aria-hidden="true">+</span>
+            </a>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+            <!-- Card -->
+            <div
+                    class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+            >
+                <div
+                        class="p-3 ml-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
+                >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                        ></path>
+                    </svg>
+                </div>
+                <div>
+                    <p
+                            class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                    >
+                        کل شرکت ها
+                    </p>
+                    <p
+                            class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                    >
+                        {{ persons.count }}
+                    </p>
+                </div>
+            </div>
+            <!-- Card -->
+            <div
+                    class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+            >
+                <div
+                        class="p-3 ml-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
+                >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                                fill-rule="evenodd"
+                                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                                clip-rule="evenodd"
+                        ></path>
+                    </svg>
+                </div>
+                <div>
+                    <p
+                            class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                    >
+                        تعداد کل پرسنل
+                    </p>
+                    <p
+                            class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                    >
+
+                    </p>
+                </div>
+            </div>
+            <!-- Card -->
+            <div
+                    class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+            >
+                <div
+                        class="p-3 ml-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500"
+                >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                                d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                        ></path>
+                    </svg>
+                </div>
+                <div>
+                    <p
+                            class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                    >
+                        فروش جدید
+                    </p>
+                    <p
+                            class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                    >
+                        376
+                    </p>
+                </div>
+            </div>
+            <!-- Card -->
+            <div
+                    class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+            >
+                <div
+                        class="p-3 ml-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
+                >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                                fill-rule="evenodd"
+                                d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                                clip-rule="evenodd"
+                        ></path>
+                    </svg>
+                </div>
+                <div>
+                    <p
+                            class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                    >
+                        مخاطبین معلق
+                    </p>
+                    <p
+                            class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                    >
+                        35
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% if persons %}
+            <!-- New Table -->
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                        <tr
+                                class="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                        >
+                            <th class="px-4 py-3">نام پرسنل</th>
+                            <th class="px-4 py-3">تعداد پرسنل</th>
+                            <th class="px-4 py-3">وضعیت</th>
+                            <th class="px-4 py-3">تاریخ ثبت</th>
+                            <th class="px-4 py-3">عملیات</th>
+                        </tr>
+                        </thead>
+                        <tbody
+                                class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+                        >
+
+                        {% for person in persons %}
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center text-sm">
+                                        <!-- Avatar with inset shadow -->
+                                        <div
+                                                class="relative hidden w-8 h-8 ml-3 rounded-full md:block"
+                                        >
+                                            <img
+                                                    class="object-cover text-xs w-full h-full rounded-full"
+                                                    src="{{ person.image.url }}"
+                                                    alt="{{ person.personnel_code }}"
+                                                    loading="lazy"
+                                            />
+                                            <div
+                                                    class="absolute inset-0 rounded-full shadow-inner"
+                                                    aria-hidden="true"
+                                            ></div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold">{{ person.last_name }}</p>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                {{ person.first_name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    -
+                                </td>
+                                <td class="px-4 py-3 text-xs">
+                                    {% if person.is_active == True %}
+                                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">تایید شده</span>
+                                    {% else %}
+                                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-green-700 dark:text-green-100">تایید نشده</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ person.created |date:"M d, Y" }}
+                                </td>
+                                <td class="px-4 py-3 text-xs">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <div>
+                                            {% if person.is_active == True %}
+                                                <button type="submit" name="deactivate" value="{{ person.personnel_code }}"
+                                                        class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
+                                                    عدم تایید
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" name="activate" value="{{ person.personnel_code }}"
+                                                        class="px-2 py-1 font-semibold leading-tight text-green-100 bg-green-600 rounded-full">
+                                                    تایید
+                                                </button>
+                                            {% endif %}
+                                            <button type="submit" name="delete" value="{{ person.personnel_code }}"
+                                                    class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
+                                                حذف
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <!-- Card -->
+            <div class="flex items-center p-4 bg-red-100 text-red-700 rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="flex-model mx-auto">
+                    <span class="mb-2 text-sm text-center font-medium">
+                        هیچ پرسنلی یافت نشد !
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

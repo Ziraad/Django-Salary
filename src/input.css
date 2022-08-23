@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: "vazir";
+        src: url("../fonts/vazir-font/Farsi-Digits/Vazir-FD.eot");
+        src: url("../fonts/vazir-font/Farsi-Digits/Vazir-FD.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/vazir-font/Farsi-Digits/Vazir-FD.woff") format("woff"),
+        url("../fonts/vazir-font/Farsi-Digits/Vazir-FD.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: "iransans";
+        src: url("../fonts/IranSans/BRoya.eot");
+        src: url("../fonts/IranSans/BRoya.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/IranSans/BRoya.woff") format("woff"), url("../fonts/IranSans/BRoya.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+}
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-indigo-400 rounded;
+    /* background-color: #5352ed;
+    border-radius: 3px; */
+}
+
+body {
+    @apply font-vazir;
+}
+.form-select{
+    background-position: left  0.75rem center !important;
+}
+/*.screen {*/
+/*    @apply mx-auto md:max-w-screen-xl p-2 md:p-4 my-4 md:my-8;*/
+/*}*/
+
+/*.screen-md {*/
+/*    @apply mx-auto max-w-screen-md mx-auto px-1 md:px-2 my-4 md:my-8;*/
+/*}*/
+
+/*.screen-lg {*/
+/*    @apply md:max-w-screen-lg mx-auto p-2 md:p-4 my-4 md:my-8;*/
+/*}*/
+
+/*.screen-sm {*/
+/*    @apply md:max-w-sm mx-auto p-2 md:p-4 my-4 md:my-8;*/
+/*}*/
+/*.btn-s {*/
+/*    @apply rounded-lg border border-secondary bg-primary  hover:bg-yellow-500 text-onPrimary hover:text-onPrimary hover:shadow tr-model-100;*/
+/*}*/
+/*.btn-z {*/
+/*    @apply rounded-lg border border-secondary bg-transparent  hover:bg-primary text-onBackground hover:text-onPrimary hover:shadow tr-model-100;*/
+/*}*/
+
+/*.btn-danger {*/
+/*    @apply rounded-lg border border-danger bg-danger text-onDanger hover:shadow tr-model-100;*/
+/*}*/
+
+/*.title {*/
+/*    @apply text-gray-700 font-black;*/
+/*}*/
+
+/*.text-700 {*/
+/*    @apply text-gray-700;*/
+/*}*/
+
+.tr-model {
+    @apply transition ease-in duration-150;
+}
+
+.tr-model-100 {
+    @apply transition ease-in duration-100;
+}
+
+.flex-model {
+    @apply flex justify-center items-center;
+}
+/*.badge-z {*/
+/*    @apply flex justify-center items-center w-10 rounded-xl px-2 bg-danger text-onDanger;*/
+/*}*/
+/*#cke_id_text {*/
+/*    width: 100% !important;*/
+/*}*/
+
+/*.swal2-popup {*/
+/*    font-size: .75rem;*/
+/*}*/
+
+/*#id_captcha {*/
+/*    @apply mx-auto;*/
+/*}*/
+
+/*.ltr {*/
+/*    direction: ltr;*/
+/*}*/
+
+/*.flickity-viewport {*/
+/*    @apply h-128;*/
+/*}*/
+
+/*.title-list_detail {*/
+/*    @apply bg-surface text-onSurface w-64 border border-secondary p-2 rounded;*/
+/*}*/
+
+/*.text-list_detail {*/
+/*    @apply bg-surface text-onBackground w-full border border-secondary p-2 rounded;*/
+/*}*/
+
+/*.title-ulist {*/
+/*    @apply text-onSurface;*/
+/*}*/
+
+/*.attribute-list {*/
+/*    @apply text-sm;*/
+/*}*/
+
+/*.attribute-list li {*/
+/*    @apply flex gap-2 my-2;*/
+/*}*/
+
+/*.swal2-popup {*/
+/*    @apply !bg-secondary !text-onSecondary;*/
+/*}*/
+/*.swal2-wide{*/
+/*    width:100px !important;*/
+/*}*/
+/*.swal2-title {*/
+/*    @apply !text-sm;*/
+/*}*/
+
+/*.rc-anchor-normal{*/
+/*    @aplly !w-20 md:w-32;*/
+/*}*/
+
+/*.blog-context p{*/
+/*    @apply text-justify text-sm md:text-base my-2;*/
+/*}*/
+/*.blog-context img {*/
+/*    @apply w-full h-52 sm:h-80 md:h-112 rounded;*/
+/*}*/
+/*.blog-context a.link {*/
+/*    @apply text-primary hover:text-yellow-600 tr-model-100 no-underline;*/
+/*}*/
+/*.blog-context h2 {*/
+/*    @apply font-black text-onSurface mt-4 md:mt-8;*/
+/*}*/
+/*.blog-context h3 {*/
+/*    @apply font-bold mt-2 md:mt-4;*/
+/*}*/
+/*.blog-context p {*/
+/*    @apply mt-2 md:mt-4;*/
+/*}*/
