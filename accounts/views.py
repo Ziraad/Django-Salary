@@ -282,7 +282,6 @@ def add_company(request):
         details = CompanyForm(request.POST, request.FILES)
 
         if details.is_valid():
-            print('form is valid')
             new_company = details.save(commit=False)
             name = request.POST.get('name')
             slug_ = "-".join(name.split())

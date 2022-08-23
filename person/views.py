@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from person.forms import PersonForm
 from person.models import Person
@@ -9,13 +9,34 @@ def persons(request):
     context = {
         'persons': all_person,
     }
+
+    if request.method == 'POST':
+        print('in post request')
+        if 'activate' in request.POST:
+            print('activate')
+            personnel_code = request.POST['activate']
+            get_person = get_object_or_404(Person, personnel_code=personnel_code)
+            get_person.is_active = True
+            get_person.save()
+        if 'deactivate' in request.POST:
+            print('deactivate')
+            personnel_code = request.POST['deactivate']
+            get_person = get_object_or_404(Person, personnel_code=personnel_code)
+            get_person.is_active = False
+            get_person.save()
+        if 'delete' in request.POST:
+            print('delete')
+            personnel_code = request.POST['delete']
+            get_person = get_object_or_404(Person, personnel_code=personnel_code)
+            get_person.delete()
+
+        return redirect('person:persons')
     return render(request, 'person/persons.html', context)
 
 
-def add_person(request, *args, **kwargs):
+def add_person(request):
     if request.method == 'POST':
-        details = PersonForm(request.POST, request.FILES)
-        print('details: ', details)
+        details = PersonForm(request.POST, request.FILES, request=request)
 
         if details.is_valid():
             print('form is valid')
@@ -27,6 +48,5 @@ def add_person(request, *args, **kwargs):
             print('form is not valid')
             return render(request, 'person/add_person.html', {'form': details, 'error': 'در ثبت فرم خطایی رخ داد!'})
     else:
-        # user = request.user
-        form = PersonForm()
+        form = PersonForm(request=request)
         return render(request, 'person/add_person.html', {'form': form})

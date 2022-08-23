@@ -9,15 +9,21 @@ from .models import Person
 class PersonForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         # first call parent's constructor
+        self.request = kwargs.pop("request")  # store value of request
+        print(self.request.user)
         super(PersonForm, self).__init__(*args, **kwargs)
+
         # there's a `fields` property now
         # self.fields['name'].required = False
         # self.fields['company_type'].required = False
         # self.fields['object'].required = False
         # self.fields['address'].required = False
         # self.fields['description'].required = False
+        self.fields['company'].queryset = Company.objects.filter(accountant=self.request.user)
 
-        # self.fields['company'].queryset = Company.objects.filter(accountant=user)
+    def clean(self):
+        print(self.request.user)  # request now available here also
+        pass
 
     # specify the name of model to use
     class Meta:
