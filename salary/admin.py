@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Rule, SalaryReceipt, TypeOfEmployment, BaseInfo
+from .models import Warrant, SalaryReceipt, TypeOfEmployment, BaseInfo
 
 
 @admin.register(BaseInfo)
@@ -18,5 +18,5 @@ class TypeOfEmploymentAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
 
 
-admin.site.register(Rule)
+admin.site.register(Warrant)
 admin.site.register(SalaryReceipt)

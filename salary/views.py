@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
 from salary.forms import FreeSalaryForm
@@ -6,8 +5,16 @@ from salary.models import BaseInfo, SalaryReceipt
 
 
 def home(request):
-
     return render(request, 'salary/home.html')
+
+
+#
+def represents_int(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 
 def salary(request):
@@ -64,14 +71,6 @@ def salary(request):
             'اسفند': '29',
         }
 
-        #
-        def represents_int(s):
-            try:
-                int(s)
-                return True
-            except ValueError:
-                return False
-
         try:
             assert first_name, 'لطفاً نام را وارد کنید!'
             assert len(first_name) >= 3, 'طول نام باید از 2 کاراکتر بیشتر باشد!'
@@ -84,7 +83,8 @@ def salary(request):
             for key, value in weekly_days.items():
                 if month_name == key:
                     number_of_days = int(weekly_days[key])
-                    assert int(working_days) <= number_of_days, f'تعداد روزهای ماه انتخاب شده باید { number_of_days } باشد'
+                    assert int(
+                        working_days) <= number_of_days, f'تعداد روزهای ماه انتخاب شده باید {number_of_days} باشد'
                     break
             assert represents_int(overtime), 'فرمت اضافه کاری باید یک عدد صحیح باشد!'
             assert represents_int(closed_work), 'فرمت تعطیل کاری باید یک عدد صحیح باشد!'

@@ -7,7 +7,7 @@
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <link rel="stylesheet" href="{% static 'salary/css/output.css' %}">
-            <title>حقوق و دستمزد - اضافه کردن پرسنل جدید</title>
+            <title>حقوق و دستمزد - صدور فیش حقوقی</title>
             <link
                     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
                     rel="stylesheet"
@@ -36,7 +36,7 @@
         <h2
                 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
         >
-            اضافه کردن پرسنل جدید
+            صدور فیش حقوقی
         </h2>
 
         <div class="block mx-auto m-6 p-6 border rounded-lg shadow-lg bg-white w-full">
@@ -56,75 +56,39 @@
                 {% endif %}
                 <div class="grid md:grid-cols-4 gap-4 mb-4">
                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.first_name.label }}</div>
-                        {{ form.first_name }}
+                        <div class="mb-2 text-sm text-gray-500">{{ form.person.label }}</div>
+                        {{ form.person }}
                         {#                        <span class="mt-1 text-xs text-red-500">{{ form.name.errors }}</span>#}
                     </div>
                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.last_name.label }}</div>
-                        {{ form.last_name }}
+                        <div class="mb-2 text-sm text-gray-500">{{ form.month_name.label }}</div>
+                        {{ form.month_name }}
                     </div>
-                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.nation_code.label }}</div>
-                        <div>{{ form.nation_code }}</div>
+                    <div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.year.label }}</div>
+                        <div>{{ form.year }}</div>
                         {#                        <span class="mt-1 text-xs text-red-500">{{ form.object.errors }}</span>#}
                     </div>
                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.personnel_code.label }}</div>
-                        <div>{{ form.personnel_code }}</div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.working_days.label }}</div>
+                        <div>{{ form.working_days }}</div>
                     </div>
                 </div>
 
                 <div class="grid md:grid-cols-4 gap-4 mb-4">
                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.company.label }}</div>
-                        <div>{{ form.company }}</div>
-                    </div>
-{#                    <div>#}
-                    {#                        <div class="mb-2 text-sm text-gray-500">{{ form.id_code.label }}</div>#}
-                    {#                        <div>{{ form.id_code }}</div>#}
-                    {#                    </div>#}
-                    <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.date_of_birth.label }}</div>
-                        <div>{{ form.date_of_birth }}</div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.overtime.label }}</div>
+                        <div>{{ form.overtime }}</div>
                     </div>
                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.place_of_birth.label }}</div>
-                        <div>{{ form.place_of_birth }}</div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.closed_work.label }}</div>
+                        <div>{{ form.closed_work }}</div>
+                    </div>
+                    <div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.mission.label }}</div>
+                        <div>{{ form.mission }}</div>
                     </div>
                 </div>
-                <div class="grid mb-4">
-                    <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.image.label }}</div>
-                        <div>{{ form.image }}</div>
-                    </div>
-                </div>
-                <div class="grid md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.father_name.label }}</div>
-                        <div>{{ form.father_name }}</div>
-                    </div>
-                    <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.education_degree.label }}</div>
-                        <div>{{ form.education_degree }}</div>
-                    </div>
-                </div>
-                <div class="grid md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.number_of_children.label }}</div>
-                        <div>{{ form.number_of_children }}</div>
-                    </div>
-                    <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.marital_status.label }}</div>
-                        <div>{{ form.marital_status }}</div>
-                    </div>
-                </div>
-                {#                                {% for field in form %}#}
-                {#                                    <div class="mb-2">#}
-                {#                                        {{ field.errors }}#}
-                {#                                        <span class="text-gray-600">{{ field.label_tag }}</span> {{ field }}#}
-                {#                                    </div>#}
-                {#                                {% endfor %}#}
                 <button type="submit"
                         class="w-full px-6 py-2.5 mt-4 bg-blue-600 text-white font-medium leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                     ثبت

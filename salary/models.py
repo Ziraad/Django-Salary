@@ -33,7 +33,7 @@ class BaseInfo(models.Model):
     updated = models.DateTimeField('به روز رسانی در', auto_now=True)
 
 
-class Rule(models.Model):
+class Warrant (models.Model):
     class Meta:
         ordering = ('-created',)
         verbose_name = 'حکم حقوقی'
@@ -57,7 +57,7 @@ class Rule(models.Model):
     type_of_employment = models.ForeignKey(
         TypeOfEmployment, on_delete=models.CASCADE, verbose_name='نوع استخدام')
     base_salary = models.IntegerField('حقوق پایه')
-    base_years = models.IntegerField('سنوات', blank=True)
+    base_years = models.IntegerField('سنوات', null=True, blank=True)
     reward = models.IntegerField('پاداش', null=True, blank=True)
     right_to_housing = models.IntegerField('حق مسکن', null=True, blank=True)
     right_to_grocery = models.IntegerField('حق خوار و بار', null=True, blank=True)
@@ -92,14 +92,17 @@ class SalaryReceipt(models.Model):
         ('Bahman', 'بهمن'),
         ('Esfand', 'اسفند'),
     )
-
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name='شخص')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wage_creator',
+                                   verbose_name='تهیه کننده')
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='wage_person', verbose_name='شخص')
     month_name = models.CharField('ماه', max_length=20, choices=MONTH_NAME)
     year = models.CharField('سال', max_length=4)
-    working_days = models.IntegerField('کارکرد')
-    overtime = models.IntegerField('اضافه کاری')
-    closed_work = models.IntegerField('تعطیل کاری')
-    mission = models.IntegerField('مأموریت')
+    working_days = models.IntegerField('کارکرد', default=0)
+    overtime = models.IntegerField('اضافه کاری', default=0)
+    closed_work = models.IntegerField('تعطیل کاری', default=0)
+    mission = models.IntegerField('مأموریت', default=0)
+    created = models.DateTimeField('ایجاد شده در', auto_now_add=True)
+    updated = models.DateTimeField('به روز رسانی در', auto_now=True)
 
     @staticmethod
     def calculate_free_salary(base_salary, working_days, overtime, closed_work, mission, reward, number_of_children):
@@ -128,22 +131,22 @@ class SalaryReceipt(models.Model):
         }
 
     def calculate_monthly_wage(self):
-        rule = Rule.objects.get(person=self.person)
-        daily_wage = rule.base_salary
+        warrant = Warrant.objects.get(person=self.person)
+        daily_wage = warrant.base_salary
         monthly_wage = self.working_days * daily_wage
 
         return monthly_wage
 
     def calculate_overtime_wage(self):
-        rule = Rule.objects.get(person=self.person)
-        daily_wage = rule.base_salary
+        warrant = Warrant.objects.get(person=self.person)
+        daily_wage = warrant.base_salary
         overtime_wage = daily_wage / 7.33 * 1.4 * self.overtime
 
         return overtime_wage
 
     def calculate_closed_work_wage(self):
-        rule = Rule.objects.get(person=self.person)
-        daily_wage = rule.base_salary
+        warrant = Warrant.objects.get(person=self.person)
+        daily_wage = Warrant.base_salary
         closed_work = daily_wage * 1.4 * self.closed_work
 
         return closed_work
