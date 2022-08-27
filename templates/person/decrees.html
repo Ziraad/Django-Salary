@@ -39,7 +39,7 @@
             حکم ها
         </h2>
         <div class="w-40 my-8">
-            <a href="{% url 'person:add_warrant' %}"
+            <a href="{% url 'person:add_decree' %}"
                class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
             >
                 صدور حکم جدید
@@ -125,7 +125,7 @@
                     <p
                             class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                     >
-                        {{ warrants.all.count }}
+                        {{ decrees.all.count }}
                     </p>
                 </div>
             </div>
@@ -159,7 +159,7 @@
             </div>
         </div>
 
-        {% if warrants %}
+        {% if decrees %}
             <!-- New Table -->
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
@@ -182,40 +182,40 @@
                                 class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                         >
 
-                        {% for warrant in warrants %}
+                        {% for decree in decrees %}
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3 text-sm">
-                                    {{ warrant.id }}
+                                    {{ decree.id }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ warrant.person.personnel_code }}
+                                    {{ decree.person.personnel_code }}
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center text-sm">
                                         <div>
                                             <p class="font-semibold">
-                                                {{ warrant.person.full_name }}
+                                                {{ decree.person.full_name }}
                                             </p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ warrant.company.name }}
+                                    {{ decree.company.name }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ warrant.year }}
+                                    {{ decree.year }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ warrant.type_of_employment }}
+                                    {{ decree.type_of_employment }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    {{ warrant.created | date:"M d, Y" }}
+                                    {{ decree.created | date:"M d, Y" }}
                                 </td>
                                 <td class="px-4 py-3 text-xs">
                                     <form action="" method="post">
                                         {% csrf_token %}
                                         <div>
-                                            <button type="submit" name="delete" value="{{ warrant.id }}"
+                                            <button type="submit" name="delete" value="{{ decree.id }}"
                                                     class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
                                                 حذف
                                             </button>

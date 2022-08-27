@@ -3,7 +3,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from company.models import Company
-from salary.models import Warrant, TypeOfEmployment, SalaryReceipt
+from salary.models import Decree, TypeOfEmployment, SalaryReceipt
 from .models import Person
 
 
@@ -139,24 +139,32 @@ class PersonForm(forms.ModelForm):
     #     return self.cleaned_data
 
 
-class WarrantForm(forms.ModelForm):
+class DecreeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         # first call parent's constructor
         self.request = kwargs.pop("request")  # store value of request
+        # personal_code = kwargs.pop("slug")  # store value of request
         print(self.request.user)
-        super(WarrantForm, self).__init__(*args, **kwargs)
+        # print(personal_code)
+        super(DecreeForm, self).__init__(*args, **kwargs)
         self.fields['company'].queryset = Company.objects.filter(accountant=self.request.user)
+        # if personal_code:
+        #     self.fields['person'].queryset = Person.objects.filter(personnel_code=personal_code)
+        # else:
         self.fields['person'].queryset = Person.objects.filter(company__accountant=self.request.user)
 
         # there's a `fields` property now
-        # self.fields['name'].required = False
-        # self.fields['company_type'].required = False
-        # self.fields['object'].required = False
-        # self.fields['address'].required = False
+        self.fields['company'].required = True
+        self.fields['person'].required = True
+        self.fields['type_of_rule'].required = True
+        self.fields['type_of_employment'].required = True
+        self.fields['year'].required = False
+        self.fields['base_salary'].required = False
+        self.fields['job_title'].required = False
         # self.fields['description'].required = False
 
     class Meta:
-        model = Warrant
+        model = Decree
         # fields = "__all__"
         exclude = ['created_by']
         labels = {

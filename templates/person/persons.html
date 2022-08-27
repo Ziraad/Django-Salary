@@ -71,7 +71,7 @@
                     <p
                             class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                     >
-{#                        {{ company.count }}#}
+                        {#                        {{ company.count }}#}
                     </p>
                 </div>
             </div>
@@ -169,9 +169,10 @@
                                 class="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                         >
                             <th class="px-4 py-3">نام پرسنل</th>
-                            <th class="px-4 py-3">تعداد پرسنل</th>
+                            <th class="px-4 py-3">شرکت</th>
                             <th class="px-4 py-3">وضعیت</th>
                             <th class="px-4 py-3">تاریخ ثبت</th>
+                            <th class="px-4 py-3">حکم</th>
                             <th class="px-4 py-3">عملیات</th>
                         </tr>
                         </thead>
@@ -207,7 +208,7 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    -
+                                    {{ person.company.name }}
                                 </td>
                                 <td class="px-4 py-3 text-xs">
                                     {% if person.is_active == True %}
@@ -219,17 +220,28 @@
                                 <td class="px-4 py-3 text-sm">
                                     {{ person.created |date:"M d, Y" }}
                                 </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {% if person.decree_person.first %}دارد
+                                    {% else %}
+                                        <a href="{% url 'person:add_person_decree' %}"
+                                           class="px-2 py-1 font-semibold leading-tight text-gray-400 rounded-full hover:text-blue-100 hover:bg-blue-700 tr-model-100">
+                                            صدور حکم
+                                        </a>
+                                    {% endif %}
+                                </td>
                                 <td class="px-4 py-3 text-xs">
                                     <form action="" method="post">
                                         {% csrf_token %}
                                         <div>
                                             {% if person.is_active == True %}
-                                                <button type="submit" name="deactivate" value="{{ person.personnel_code }}"
+                                                <button type="submit" name="deactivate"
+                                                        value="{{ person.personnel_code }}"
                                                         class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
                                                     عدم تایید
                                                 </button>
                                             {% else %}
-                                                <button type="submit" name="activate" value="{{ person.personnel_code }}"
+                                                <button type="submit" name="activate"
+                                                        value="{{ person.personnel_code }}"
                                                         class="px-2 py-1 font-semibold leading-tight text-green-100 bg-green-600 rounded-full">
                                                     تایید
                                                 </button>

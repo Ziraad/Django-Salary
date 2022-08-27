@@ -6,8 +6,9 @@ app_name = 'person'
 urlpatterns = [
     path('persons/', views.persons, name='persons'),
     path('add_person/', views.add_person, name='add_person'),
-    path('warrants/', views.warrants, name='warrant'),
-    path('add_warrant/', views.add_warrant, name='add_warrant'),
+    path('decrees/', views.decrees, name='decrees'),
+    path('add_decree/', views.add_decree, name='add_decree'),
+    # path('add_decree/<slug:personal_code>/', views.add_person_decree, name='add_person_decree'),
     path('wages/', views.wages, name='wages'),
     path('add_wage/', views.add_wage, name='add_wage'),
 ]

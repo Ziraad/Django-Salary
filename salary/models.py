@@ -33,7 +33,7 @@ class BaseInfo(models.Model):
     updated = models.DateTimeField('به روز رسانی در', auto_now=True)
 
 
-class Warrant (models.Model):
+class Decree(models.Model):
     class Meta:
         ordering = ('-created',)
         verbose_name = 'حکم حقوقی'
@@ -45,17 +45,22 @@ class Warrant (models.Model):
         ('Retireds', 'بازنشستگان'),
     )
 
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='rule_creator',
+    TYPE_OF_EMPLOYMENT = (
+        ('Oficial', 'رسمی'),
+        ('Contractual', 'قراردادی'),
+    )
+
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='decree_creator',
                                    verbose_name='تهیه کننده')
     company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, related_name='rule_company', blank=True, verbose_name='شرکت')
+        Company, on_delete=models.CASCADE, related_name='decree_company', blank=True, verbose_name='شرکت')
     person = models.ForeignKey(
-        Person, on_delete=models.CASCADE, related_name='rule_person', verbose_name='شخص')
+        Person, on_delete=models.CASCADE, related_name='decree_person', verbose_name='شخص')
     year = models.CharField('سال', max_length=4)
     type_of_rule = models.CharField('نوع حکم',
                                     max_length=20, choices=TYPE_OF_RULE, default='Private')
-    type_of_employment = models.ForeignKey(
-        TypeOfEmployment, on_delete=models.CASCADE, verbose_name='نوع استخدام')
+    type_of_employment = models.CharField('نوع استخدام',
+                                          max_length=20, choices=TYPE_OF_EMPLOYMENT, default='Contractual')
     base_salary = models.IntegerField('حقوق پایه')
     base_years = models.IntegerField('سنوات', null=True, blank=True)
     reward = models.IntegerField('پاداش', null=True, blank=True)
@@ -131,22 +136,22 @@ class SalaryReceipt(models.Model):
         }
 
     def calculate_monthly_wage(self):
-        warrant = Warrant.objects.get(person=self.person)
-        daily_wage = warrant.base_salary
+        decree = Decree.objects.get(person=self.person)
+        daily_wage = decree.base_salary
         monthly_wage = self.working_days * daily_wage
 
         return monthly_wage
 
     def calculate_overtime_wage(self):
-        warrant = Warrant.objects.get(person=self.person)
-        daily_wage = warrant.base_salary
+        decree = Decree.objects.get(person=self.person)
+        daily_wage = decree.base_salary
         overtime_wage = daily_wage / 7.33 * 1.4 * self.overtime
 
         return overtime_wage
 
     def calculate_closed_work_wage(self):
-        warrant = Warrant.objects.get(person=self.person)
-        daily_wage = Warrant.base_salary
+        decree = Decree.objects.get(person=self.person)
+        daily_wage = decree.base_salary
         closed_work = daily_wage * 1.4 * self.closed_work
 
         return closed_work

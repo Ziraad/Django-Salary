@@ -1,11 +1,12 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
-from person.forms import PersonForm, WarrantForm, SalaryReceiptForm
+from person.forms import PersonForm, DecreeForm, SalaryReceiptForm
 from person.models import Person
-from salary.models import Warrant, SalaryReceipt
+from salary.models import Decree, SalaryReceipt
 from salary.views import represents_int
 from django.template.defaulttags import register
+
 
 def persons(request):
     all_person = Person.objects.filter(company__accountant=request.user)
@@ -54,45 +55,87 @@ def add_person(request):
         return render(request, 'person/add_person.html', {'form': form})
 
 
-def warrants(request):
-    all_warrants = Warrant.objects.filter(created_by=request.user)
+def decrees(request):
+    all_decrees = Decree.objects.filter(created_by=request.user)
     context = {
-        'warrants': all_warrants,
+        'decrees': all_decrees,
     }
     if request.method == 'POST':
         if 'delete' in request.POST:
             print('delete')
-            warrant_id = request.POST['delete']
-            get_warrant = get_object_or_404(Warrant, id=warrant_id)
-            get_warrant.delete()
-            return redirect('person:warrant')
-    return render(request, 'person/warrants.html', context)
+            decree_id = request.POST['delete']
+            get_decree = get_object_or_404(Decree, id=decree_id)
+            get_decree.delete()
+            return redirect('person:decrees')
+    return render(request, 'person/decrees.html', context)
 
 
-def add_warrant(request):
+def add_decree(request):
     if request.method == 'POST':
-        details = WarrantForm(request.POST, request=request)
+        details = DecreeForm(request.POST, request=request)
         person = request.POST['person']
         year = request.POST['year']
+        job_title = request.POST['job_title']
+        base_salary = request.POST['base_salary']
+        print('len job title: ', len(job_title))
 
-        is_warrant = Warrant.objects.filter(person=person, year__exact=year)
+        is_decree = Decree.objects.filter(person=person, year__exact=year)
+        # get_person = Person.objects.get(__)
         # is_warrant = Warrant.objects.filter(Q(person=person) | Q(year__exact=year))
-        print('warrant: ', is_warrant)
+        print('decree: ', is_decree)
         try:
-            assert not is_warrant.exists(), 'برای این کاربر در سال مورد نظر قبلاً حکم صادر شده است!'
-            assert represents_int(request.POST['base_salary']), 'فرمت حقوق پایه باید یک عدد صحیح باشد!'
+            get_person = Person.objects.get(id=person)
+            print('person: ', person)
+            assert get_person.is_active == True, 'برای صدور حکم، باید وضعیت کاربر تایید شده باشد!'
+            assert not is_decree.exists(), 'برای این کاربر در سال مورد نظر قبلاً حکم صادر شده است!'
+            assert len(year) > 0, 'سال را وارد کنید'
+            assert represents_int(year), 'فرمت سال باید یک عدد صحیح 4 رقمی باشد'
+            assert len(job_title) > 0, 'عنوان شغلی را وارد کنید'
+            assert len(job_title) > 3, 'تعدا کاراکترهای عنوان شغلی باید از 3 بیشتر باشد'
+            assert len(base_salary) > 0, 'حقوق پایه را وارد کنید'
+            assert represents_int(base_salary), 'فرمت حقوق پایه باید یک عدد صحیح باشد!'
             if details.is_valid():
                 print('form is valid')
-                new_warrant = details.save(commit=False)
-                new_warrant.created_by = request.user
-                new_warrant.save()
-                return redirect('person:warrant')
+                new_decree = details.save(commit=False)
+                new_decree.created_by = request.user
+                new_decree.save()
+                return redirect('person:decrees')
         except Exception as e:
             print('form is not valid')
-            return render(request, 'person/add_warrant.html', {'form': details, 'error': str(e)})
+            return render(request, 'person/add_decree.html', {'form': details, 'error': str(e)})
     else:
-        form = WarrantForm(request=request)
-        return render(request, 'person/add_warrant.html', {'form': form})
+        form = DecreeForm(request=request)
+        return render(request, 'person/add_decree.html', {'form': form})
+
+
+# def add_person_decree(request, personal_code):
+#     if request.method == 'POST':
+#         details = DecreeForm(request.POST, request=request, slug=personal_code)
+#         person = request.POST['person']
+#         year = request.POST['year']
+#
+#         is_decree = Decree.objects.filter(person=person, year__exact=year)
+#         # get_person = Person.objects.get(__)
+#         # is_warrant = Warrant.objects.filter(Q(person=person) | Q(year__exact=year))
+#         print('decree: ', is_decree)
+#         try:
+#             get_person = Person.objects.get(personnel_code=personal_code)
+#             print('person: ', person)
+#             assert get_person.is_active == True, 'برای صدور حکم، باید وضعیت کاربر تایید شده باشد!'
+#             assert not is_decree.exists(), 'برای این کاربر در سال مورد نظر قبلاً حکم صادر شده است!'
+#             assert represents_int(request.POST['base_salary']), 'فرمت حقوق پایه باید یک عدد صحیح باشد!'
+#             if details.is_valid():
+#                 print('form is valid')
+#                 new_decree = details.save(commit=False)
+#                 new_decree.created_by = request.user
+#                 new_decree.save()
+#                 return redirect('person:decrees')
+#         except Exception as e:
+#             print('form is not valid')
+#             return render(request, 'person/add_decree.html', {'form': details, 'error': str(e)})
+#     else:
+#         form = DecreeForm(request=request, slug=personal_code)
+#         return render(request, 'person/add_decree.html', {'form': form})
 
 
 def wages(request):
@@ -122,7 +165,6 @@ def add_wage(request):
         closed_work = request.POST['closed_work']
         mission = request.POST['mission']
 
-
         weekly_days = {
             'Farvardin': '31',
             'Ordibehesht': '31',
@@ -139,6 +181,8 @@ def add_wage(request):
         }
 
         try:
+            is_decree = Decree.objects.filter(person=person, year__exact=year)
+            assert is_decree.exists(), 'برای این کاربر در سال مورد نظر هیچ حکمی صادر نشده است!'
             is_wage = SalaryReceipt.objects.filter(person=person, month_name__exact=month_name, year__exact=year)
             print('wage: ', is_wage)
             assert represents_int(year), 'فرمت سال باید یک عدد صحیح 4 رقمی باشد'
@@ -147,7 +191,7 @@ def add_wage(request):
             for key, value in weekly_days.items():
                 if month_name == key:
                     number_of_days = int(weekly_days[key])
-                    assert int(working_days) <= number_of_days,\
+                    assert int(working_days) <= number_of_days, \
                         f'تعداد روزهای ماه انتخاب شده نمی تواند از {number_of_days} بیشتر باشد!'
                     assert int(working_days) > 0, \
                         'روزهای کارکرد باید از 0 بیشتر باشد!'
