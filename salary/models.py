@@ -112,6 +112,15 @@ class SalaryReceipt(models.Model):
     created = models.DateTimeField('ایجاد شده در', auto_now_add=True)
     updated = models.DateTimeField('به روز رسانی در', auto_now=True)
 
+    monthly_wage = models.IntegerField('', default=0)
+    overtime_wage = models.IntegerField('', default=0)
+    closed_work_wage = models.IntegerField('', default=0)
+    mission_wage = models.IntegerField('', default=0)
+    right_of_house = models.IntegerField('', default=0)
+    right_of_grocery = models.IntegerField('', default=0)
+    right_of_children = models.IntegerField('', default=0)
+    sub_total_wage = models.IntegerField('', default=0)
+
     def __unicode__(self):
         return self.id
 
