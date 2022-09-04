@@ -181,11 +181,12 @@ def add_wage(request):
         }
 
         try:
+            assert len(year) > 0, 'سال را وارد کنید'
+            assert represents_int(year), 'فرمت سال باید یک عدد صحیح 4 رقمی باشد'
             is_decree = Decree.objects.filter(person=person, year__exact=year)
             assert is_decree.exists(), 'برای این کاربر در سال مورد نظر هیچ حکمی صادر نشده است!'
             is_wage = SalaryReceipt.objects.filter(person=person, month_name__exact=month_name, year__exact=year)
             print('wage: ', is_wage)
-            assert represents_int(year), 'فرمت سال باید یک عدد صحیح 4 رقمی باشد'
             assert represents_int(working_days), 'فرمت روزهای کارکرد باید یک عدد صحیح باشد!'
             # number_of_days = 0
             for key, value in weekly_days.items():
@@ -216,3 +217,11 @@ def add_wage(request):
     else:
         form = SalaryReceiptForm(request=request)
         return render(request, 'person/add_wage.html', {'form': form})
+
+
+def wage_detail(request, wage_id):
+    wage = get_object_or_404(SalaryReceipt, id=wage_id)
+    context = {
+        'wage': wage,
+    }
+    return render(request, 'salary/wage_detail.html', context)

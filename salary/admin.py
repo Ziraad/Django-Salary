@@ -18,5 +18,10 @@ class TypeOfEmploymentAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
 
 
+@admin.register(SalaryReceipt)
+class TypeOfEmploymentAdmin(admin.ModelAdmin):
+    list_display = ['person', 'month_name', 'year', 'created_by', 'created']
+
+
 admin.site.register(Decree)
-admin.site.register(SalaryReceipt)
+# admin.site.register(SalaryReceipt)

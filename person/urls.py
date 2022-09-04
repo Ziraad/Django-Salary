@@ -11,4 +11,5 @@ urlpatterns = [
     # path('add_decree/<slug:personal_code>/', views.add_person_decree, name='add_person_decree'),
     path('wages/', views.wages, name='wages'),
     path('add_wage/', views.add_wage, name='add_wage'),
+    path('wage_detail/<int:wage_id>/', views.wage_detail, name='wage_detail'),
 ]

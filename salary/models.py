@@ -1,8 +1,10 @@
-from calendar import month_name
 from django.db import models
+from django.urls import reverse
+
 from person.models import Person
 from django.conf import settings
 from company.models import Company
+import uuid
 
 
 class TypeOfEmployment(models.Model):
@@ -97,6 +99,7 @@ class SalaryReceipt(models.Model):
         ('Bahman', 'بهمن'),
         ('Esfand', 'اسفند'),
     )
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wage_creator',
                                    verbose_name='تهیه کننده')
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='wage_person', verbose_name='شخص')
@@ -108,6 +111,15 @@ class SalaryReceipt(models.Model):
     mission = models.IntegerField('مأموریت', default=0)
     created = models.DateTimeField('ایجاد شده در', auto_now_add=True)
     updated = models.DateTimeField('به روز رسانی در', auto_now=True)
+
+    def __unicode__(self):
+        return self.id
+
+    def __str__(self):
+        return self.person.personnel_code
+
+    def get_absolute_url(self):
+        return reverse("person:wage_detail", kwargs={"wage_id": self.id})
 
     @staticmethod
     def calculate_free_salary(base_salary, working_days, overtime, closed_work, mission, reward, number_of_children):

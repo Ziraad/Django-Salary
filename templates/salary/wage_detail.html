@@ -1,0 +1,151 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+{% block head %}
+    {% block extra_headers %}
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <link rel="stylesheet" href="{% static 'salary/css/output.css' %}">
+            <title>حقوق و دستمزد - اضافه کردن پرسنل جدید</title>
+            <link
+                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+                    rel="stylesheet"
+            />
+            <script
+                    src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+                    defer
+            ></script>
+            <script src="{% static 'salary/js/init-alpine.js' %}"></script>
+            <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+            />
+            <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                    defer
+            ></script>
+            <script src=".{% static 'salary/js/charts-lines.js' %}" defer></script>
+            <script src="{% static 'salary/js/charts-pie.js' %}" defer></script>
+        </head>
+    {% endblock %}
+{% endblock %}
+{% block title %}{{ super }} داشبورد {% endblock %}
+{% block body %}
+    <section class="my-32 text-gray-800 text-center md:text-right">
+                <h2 class="text-3xl font-bold mb-12 text-center">فیش حقوقی شما</h2>
+                <div class="block mx-auto p-6 border rounded-lg shadow-lg bg-white max-w-4xl">
+                    <div class="flex flex-col">
+                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                                <div class="overflow-hidden">
+                                    <div class="font-bold text-gray-900 text-center my-2 p-2">
+                                        <div class="mb-4">
+                                            <span>فیش حقوقی</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <span>{{ wage.person.company }}</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <span>{{ wage.month_name }} {{ wage.year }}</span>
+                                        </div>
+                                        <div class="mb-4">
+                                            <span>
+                                                {{ wage.person.first_name }} {{ wage.person.last_name }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <table class="min-w-full border text-center">
+                                        <thead class="border-b">
+
+                                        </thead>
+                                        <tbody>
+                                        <tr class="border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                حقوق ماهیانه
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                                                {{ calculate_salary.monthly_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                اضافه کاری
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.overtime_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                تعطیل کاری
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.closed_work_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                مأموریت
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.mission_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                حق خوار و بار
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.right_of_grocery | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                حق مسکن
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.right_of_house | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                حق اولاد
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.right_of_children | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-900 border-r">
+                                                جمع حقوق و دستمزد ناخالص
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-green-500 font-black px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.sub_total_wage | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock %}
