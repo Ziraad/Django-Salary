@@ -202,6 +202,9 @@ def add_wage(request):
             assert represents_int(mission), 'فرمت مأموریت باید یک عدد صحیح باشد!'
             assert not is_wage.exists(), 'برای این کاربر در سال و ماه مورد نظر قبلاً فیش حقوقی صادر شده است!'
 
+            wage = SalaryReceipt()
+            wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
+
         except Exception as e:
             print('form is not valid')
             return render(request, 'person/add_wage.html', {'form': details, 'error': str(e)})

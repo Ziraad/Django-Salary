@@ -156,6 +156,10 @@ class SalaryReceipt(models.Model):
             'sub_total_wage': sub_total_wage
         }
 
+    @staticmethod
+    def calculate_salary(month_name, year, working_days, overtime, closed_work, mission):
+        pass
+
     def calculate_monthly_wage(self):
         decree = Decree.objects.get(person=self.person)
         daily_wage = decree.base_salary
