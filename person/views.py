@@ -186,6 +186,7 @@ def add_wage(request):
             is_decree = Decree.objects.filter(person=person, year__exact=year)
             assert is_decree.exists(), 'برای این کاربر در سال مورد نظر هیچ حکمی صادر نشده است!'
             is_wage = SalaryReceipt.objects.filter(person=person, month_name__exact=month_name, year__exact=year)
+            # assert len(is_wage) == 0, 'برای این کاربر در ماه مورد نظر فیش صادر شده است!'
             print('wage: ', is_wage)
             assert represents_int(working_days), 'فرمت روزهای کارکرد باید یک عدد صحیح باشد!'
             # number_of_days = 0
@@ -201,22 +202,43 @@ def add_wage(request):
             assert represents_int(closed_work), 'فرمت تعطیل کاری باید یک عدد صحیح باشد!'
             assert represents_int(mission), 'فرمت مأموریت باید یک عدد صحیح باشد!'
             assert not is_wage.exists(), 'برای این کاربر در سال و ماه مورد نظر قبلاً فیش حقوقی صادر شده است!'
+            # assert details.is_valid(), 'در ثبت فرم خطایی رخ داد!'
 
-            wage = SalaryReceipt()
-            wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
+            if details.is_valid():
+                print('form is valid')
+                new_wage = details.save(commit=False)
+                new_wage.created_by = request.user
+                new_wage.save()
+                # wage = SalaryReceipt()
+                # new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
+                return redirect('person:wages')
+            else:
+                print('در ثبت فرم اشکالی بوجود آمد!')
 
-        except Exception as e:
-            print('form is not valid')
-            return render(request, 'person/add_wage.html', {'form': details, 'error': str(e)})
-        if details.is_valid():
+                # raise Exception('form is nottt valid')
+                # return render(request, 'person/add_wage.html', {'form': details, 'error': 'در ثبت فرم خطایی رخ داد!'})
             print('form is valid')
             new_wage = details.save(commit=False)
             new_wage.created_by = request.user
             new_wage.save()
+            # wage = SalaryReceipt()
+            # new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
             return redirect('person:wages')
-        else:
+
+        except Exception as e:
             print('form is not valid')
-            return render(request, 'person/add_wage.html', {'form': details, 'error': 'در ثبت فرم خطایی رخ داد!'})
+            return render(request, 'person/add_wage.html', {'form': details, 'error': str(e)})
+        # if details.is_valid():
+        #     print('form is valid')
+        #     new_wage = details.save(commit=False)
+        #     new_wage.created_by = request.user
+        #     new_wage.save()
+        #     # wage = SalaryReceipt()
+        #     new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
+        #     return redirect('person:wages')
+        # else:
+        #     print('form is not valid')
+        #     return render(request, 'person/add_wage.html', {'form': details, 'error': 'در ثبت فرم خطایی رخ داد!'})
     else:
         form = SalaryReceiptForm(request=request)
         return render(request, 'person/add_wage.html', {'form': form})

@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
 from person.models import Person
@@ -156,9 +157,22 @@ class SalaryReceipt(models.Model):
             'sub_total_wage': sub_total_wage
         }
 
-    @staticmethod
-    def calculate_salary(month_name, year, working_days, overtime, closed_work, mission):
-        pass
+    def calculate_salary(self, month_name, year, working_days, overtime, closed_work, mission):
+        try:
+            person = self.person
+            decree = get_object_or_404(Decree, person=person, year=year)
+            number_of_children = decree.person.number_of_children
+            base_salary = decree.base_salary
+            self.monthly_wage = int(float(working_days) * float(base_salary))
+            self.overtime_wage = int(float(base_salary) / 7.33 * 1.4 * float(overtime))
+            self.closed_work_wage = int(float(base_salary) * 1.4 * float(closed_work))
+            self.mission_wage = int(float(base_salary) * 1.4 * float(mission))
+            self.right_of_house = int(decree.right_to_housing / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
+            self.right_of_grocery = int(decree.right_to_grocery / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
+            self.right_of_children = int(decree.right_to_children * float(decree.number_of_children) * float(working_days))
+            self.save()
+        except Exception as e:
+            raise str(e)
 
     def calculate_monthly_wage(self):
         decree = Decree.objects.get(person=self.person)

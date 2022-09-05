@@ -272,7 +272,8 @@ class SalaryReceiptForm(forms.ModelForm):
     class Meta:
         model = SalaryReceipt
         # fields = "__all__"
-        exclude = ['created_by']
+        exclude = ['created_by', 'monthly_wage', 'overtime_wage', 'closed_work_wage', 'mission_wage', 'right_of_house',
+                   'right_of_grocery', 'right_of_children', 'sub_total_wage']
         labels = {
             'person': _('نام پرسنل'),
             'month_name': _('ماه'),
