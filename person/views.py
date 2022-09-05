@@ -208,22 +208,21 @@ def add_wage(request):
                 print('form is valid')
                 new_wage = details.save(commit=False)
                 new_wage.created_by = request.user
+                new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
                 new_wage.save()
                 # wage = SalaryReceipt()
-                # new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
                 return redirect('person:wages')
             else:
                 print('در ثبت فرم اشکالی بوجود آمد!')
 
                 # raise Exception('form is nottt valid')
                 # return render(request, 'person/add_wage.html', {'form': details, 'error': 'در ثبت فرم خطایی رخ داد!'})
-            print('form is valid')
-            new_wage = details.save(commit=False)
-            new_wage.created_by = request.user
-            new_wage.save()
-            # wage = SalaryReceipt()
-            # new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
-            return redirect('person:wages')
+            # new_wage = details.save(commit=False)
+            # new_wage.created_by = request.user
+            # new_wage.save()
+            # # wage = SalaryReceipt()
+            # # new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
+            # return redirect('person:wages')
 
         except Exception as e:
             print('form is not valid')

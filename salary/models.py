@@ -64,12 +64,13 @@ class Decree(models.Model):
                                     max_length=20, choices=TYPE_OF_RULE, default='Private')
     type_of_employment = models.CharField('نوع استخدام',
                                           max_length=20, choices=TYPE_OF_EMPLOYMENT, default='Contractual')
-    base_salary = models.IntegerField('حقوق پایه')
-    base_years = models.IntegerField('سنوات', null=True, blank=True)
-    reward = models.IntegerField('پاداش', null=True, blank=True)
-    right_to_housing = models.IntegerField('حق مسکن', null=True, blank=True)
-    right_to_grocery = models.IntegerField('حق خوار و بار', null=True, blank=True)
-    right_to_supervisor = models.IntegerField('حق سرپرستی', null=True, blank=True)
+    base_salary = models.IntegerField('حقوق پایه', default=0)
+    base_years = models.IntegerField('سنوات', default=0, null=True, blank=True)
+    reward = models.IntegerField('پاداش', default=0, null=True, blank=True)
+    right_to_housing = models.IntegerField('حق مسکن', default=0, null=True, blank=True)
+    right_to_grocery = models.IntegerField('حق خوار و بار', default=0, null=True, blank=True)
+    right_to_supervisor = models.IntegerField('حق سرپرستی', default=0, null=True, blank=True)
+    right_of_children = models.IntegerField('حق اولاد', default=0, null=True, blank=True)
     service_location = models.CharField('محل خدمت', max_length=50, null=True, blank=True)
     job_title = models.CharField('عنوان شغل', max_length=50)
     organizational_unit = models.CharField('واحد سازمانی', max_length=50, null=True, blank=True)
@@ -158,21 +159,50 @@ class SalaryReceipt(models.Model):
         }
 
     def calculate_salary(self, month_name, year, working_days, overtime, closed_work, mission):
+        print('***********************************************************')
+        print('in def calculate salary')
+        print('month_name: ', month_name)
+        print('year: ', year)
+        print('working_days: ', working_days)
+        print('overtime: ', overtime)
+        print('closed_work: ', closed_work)
+        print('mission: ', mission)
+        print('***********************************************************')
         try:
+            print('***********************************************************')
+            print('in try definition')
             person = self.person
+            print('person: ', person)
             decree = get_object_or_404(Decree, person=person, year=year)
+            right_to_housing = decree.right_to_housing
+            right_to_grocery = decree.right_to_grocery
             number_of_children = decree.person.number_of_children
+            print('decree: ', decree)
+            number_of_children = decree.person.number_of_children
+            print('number_of_children: ', number_of_children)
             base_salary = decree.base_salary
-            self.monthly_wage = int(float(working_days) * float(base_salary))
+            print('base_salary: ', base_salary)
+            print('***********************************************************')
+            self.monthly_wage = int(working_days) * int(base_salary)
+            print('monthly_wage: ', self.monthly_wage)
             self.overtime_wage = int(float(base_salary) / 7.33 * 1.4 * float(overtime))
+            print('overtime_wage: ', self.overtime_wage)
             self.closed_work_wage = int(float(base_salary) * 1.4 * float(closed_work))
+            print('closed_work_wage: ', self.closed_work_wage)
             self.mission_wage = int(float(base_salary) * 1.4 * float(mission))
-            self.right_of_house = int(decree.right_to_housing / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
-            self.right_of_grocery = int(decree.right_to_grocery / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
-            self.right_of_children = int(decree.right_to_children * float(decree.number_of_children) * float(working_days))
+            print('mission_wage: ', self.mission_wage)
+            self.right_of_house = int(right_to_housing / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
+            print('right_of_house: ', self.right_of_house)
+            self.right_of_grocery = int(right_to_grocery / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
+            print('right_of_grocery: ', self.right_of_grocery)
+            self.right_of_children = int(number_of_children * float(number_of_children) * float(working_days))
+            print('right_of_children: ', self.right_of_children)
+
+            self.sub_total_wage = int(self.monthly_wage) + int(self.overtime_wage) + int(self.closed_work_wage) + int(
+                self.mission_wage) + int(self.right_of_house) + int(self.right_of_grocery) + int(self.right_of_children)
             self.save()
         except Exception as e:
-            raise str(e)
+            raise Exception(e)
 
     def calculate_monthly_wage(self):
         decree = Decree.objects.get(person=self.person)

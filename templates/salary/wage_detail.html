@@ -26,6 +26,9 @@
                     src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
                     defer
             ></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
             <script src=".{% static 'salary/js/charts-lines.js' %}" defer></script>
             <script src="{% static 'salary/js/charts-pie.js' %}" defer></script>
         </head>
@@ -33,119 +36,145 @@
 {% endblock %}
 {% block title %}{{ super }} داشبورد {% endblock %}
 {% block body %}
-    <section class="my-32 text-gray-800 text-center md:text-right">
-                <h2 class="text-3xl font-bold mb-12 text-center">فیش حقوقی شما</h2>
-                <div class="block mx-auto p-6 border rounded-lg shadow-lg bg-white max-w-4xl">
-                    <div class="flex flex-col">
-                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                                <div class="overflow-hidden">
-                                    <div class="font-bold text-gray-900 text-center my-2 p-2">
-                                        <div class="mb-4">
-                                            <span>فیش حقوقی</span>
-                                        </div>
-                                        <div class="mb-4">
-                                            <span>{{ wage.person.company }}</span>
-                                        </div>
-                                        <div class="mb-4">
-                                            <span>{{ wage.month_name }} {{ wage.year }}</span>
-                                        </div>
-                                        <div class="mb-4">
+    <section class="my-32 text-gray-700 dark:text-gray-200 text-center md:text-right">
+        <h2 class="text-3xl font-bold mb-12 text-center">فیش حقوقی شما</h2>
+
+        <div class="mx-auto max-w-4xl mb-2">
+            <button class="w-24 h-8 text-xs rounded bg-gray-100 dark:bg-gray-700" id="pdfButton">دریافت
+                فایل PDF
+            </button>
+        </div>
+        <div id="makepdf"
+             class="block mx-auto p-6 rounded-lg shadow-lg border bg-white dark:bg-gray-800 dark:border-gray-700 max-w-4xl">
+            <div class="flex flex-col">
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="overflow-hidden">
+                            <div class="font-bold text-gray-800 dark:text-gray-400 text-center my-2 p-2">
+                                <div class="mb-4">
+                                    <span>فیش حقوقی</span>
+                                </div>
+                                <div class="mb-4">
+                                    <span>{{ wage.person.company }}</span>
+                                </div>
+                                <div class="mb-4">
+                                    <span>{{ wage.month_name }} {{ wage.year }}</span>
+                                </div>
+                                <div class="mb-4">
                                             <span>
                                                 {{ wage.person.first_name }} {{ wage.person.last_name }}
                                             </span>
-                                        </div>
-                                    </div>
-                                    <table class="min-w-full border text-center">
-                                        <thead class="border-b">
-
-                                        </thead>
-                                        <tbody>
-                                        <tr class="border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                                                حقوق ماهیانه
-                                            </td>
-                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                                                {{ wage.monthly_wage | intcomma:False }}
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                                                اضافه کاری
-                                            </td>
-                                            <td colspan="2"
-                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
-                                                {{ wage.overtime_wage | intcomma:False }}
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                                                تعطیل کاری
-                                            </td>
-                                            <td colspan="2"
-                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
-                                                {{ wage.closed_work_wage | intcomma:False }}
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                                                مأموریت
-                                            </td>
-                                            <td colspan="2"
-                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
-                                                {{ wage.mission_wage | intcomma:False }}
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                                                حق خوار و بار
-                                            </td>
-                                            <td colspan="2"
-                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
-                                                {{ wage.right_of_grocery | intcomma:False }}
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                                                حق مسکن
-                                            </td>
-                                            <td colspan="2"
-                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
-                                                {{ wage.right_of_house | intcomma:False }}
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                                                حق اولاد
-                                            </td>
-                                            <td colspan="2"
-                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
-                                                {{ wage.right_of_children | intcomma:False }}
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-white border-b">
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-900 border-r">
-                                                جمع حقوق و دستمزد ناخالص
-                                            </td>
-                                            <td colspan="2"
-                                                class="text-sm text-green-500 font-black px-6 py-4 whitespace-nowrap text-center border-r">
-                                                {{ wage.sub_total_wage | intcomma:False }}
-                                            </td>
-                                        </tr>
-
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
+                            <table class="min-w-full border dark:border-gray-700 text-center">
+                                <thead class="border-b">
+
+                                </thead>
+                                <tbody>
+                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                        حقوق ماهیانه
+                                    </td>
+                                    <td class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap border-r dark:border-gray-700">
+                                        {{ wage.monthly_wage | intcomma:False }}
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                        اضافه کاری
+                                    </td>
+                                    <td colspan="2"
+                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                        {{ wage.overtime_wage | intcomma:False }}
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                        تعطیل کاری
+                                    </td>
+                                    <td colspan="2"
+                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                        {{ wage.closed_work_wage | intcomma:False }}
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                        مأموریت
+                                    </td>
+                                    <td colspan="2"
+                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                        {{ wage.mission_wage | intcomma:False }}
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                        حق خوار و بار
+                                    </td>
+                                    <td colspan="2"
+                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                        {{ wage.right_of_grocery | intcomma:False }}
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                        حق مسکن
+                                    </td>
+                                    <td colspan="2"
+                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                        {{ wage.right_of_house | intcomma:False }}
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                        حق اولاد
+                                    </td>
+                                    <td colspan="2"
+                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                        {{ wage.right_of_children | intcomma:False }}
+                                    </td>
+                                </tr>
+
+                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-800 dark:text-gray-200 border-r dark:border-gray-700">
+                                        جمع حقوق و دستمزد ناخالص
+                                    </td>
+                                    <td colspan="2"
+                                        class="text-sm text-green-500 font-black px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                        {{ wage.sub_total_wage | intcomma:False }}
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
+    </section>
+    <script>
+        const button = document.getElementById("pdfButton");
+        const makepdf = document.getElementById("makepdf");
+        {#const {jsPDF} = window.jspdf;#}
+        {##}
+        {#        const doc = new jsPDF('p', 'pt', 'a4');#}
+
+        const opt = {
+            margin: 1,
+            filename: 'myfile.pdf',
+            image: {type: 'jpeg', quality: 0.98},
+            html2canvas: {scale: 4},
+            jsPDF: {unit: 'in', format: 'a4', orientation: 'portrait'}
+        };
+        button.addEventListener("click", function () {
+            console.log('pdf button clicked')
+            html2pdf().set(opt).from(makepdf).save();
+        });
+    </script>
 {% endblock %}
