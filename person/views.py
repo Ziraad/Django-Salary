@@ -82,11 +82,11 @@ def add_decree(request):
         year = request.POST['year']
         job_title = request.POST['job_title']
         base_salary = request.POST['base_salary']
-        print('len job title: ', len(job_title))
+        right_of_children = request.POST['right_of_children']
+        right_to_housing = request.POST['right_to_housing']
+        right_to_grocery = request.POST['right_to_grocery']
 
         is_decree = Decree.objects.filter(person=person, year__exact=year)
-        # get_person = Person.objects.get(__)
-        # is_warrant = Warrant.objects.filter(Q(person=person) | Q(year__exact=year))
         print('decree: ', is_decree)
         try:
             get_person = Person.objects.get(id=person)
@@ -99,6 +99,22 @@ def add_decree(request):
             assert len(job_title) > 3, 'تعدا کاراکترهای عنوان شغلی باید از 3 بیشتر باشد'
             assert len(base_salary) > 0, 'حقوق پایه را وارد کنید'
             assert represents_int(base_salary), 'فرمت حقوق پایه باید یک عدد صحیح باشد!'
+            assert not int(base_salary) == 0, 'حقوق پایه باید از 0 بزرگتر باشد!'
+            assert len(right_of_children) > 0, 'حق اولاد را وارد کنید'
+            assert represents_int(right_of_children), 'فرمت حقوق اولاد باید یک عدد صحیح باشد!'
+            assert not int(right_of_children) == 0, 'حق اولاد باید از 0 بزرگتر باشد!'
+            print('base_salary: ', int(base_salary) * 3)
+            print('right_of_children: ', int(right_of_children))
+            assert int(right_of_children) == int(base_salary) * 3, 'حق اولاد(ماهانه) باید معادل 3 برابر حقوق روزانه ' \
+                                                                   'باشد ! '
+            assert represents_int(right_of_children), 'فرمت حق اولاد باید یک عدد صحیح باشد!'
+            assert len(right_to_housing) > 0, 'حق مسکن را وارد کنید'
+            assert represents_int(right_to_housing), 'فرمت حق مسکن باید یک عدد صحیح باشد!'
+            assert not int(right_to_housing) == 0, 'حق مسکن باید از 0 بزرگتر باشد!'
+            assert len(right_to_grocery) > 0, 'حق خوار و بار را وارد کنید'
+            assert represents_int(right_to_grocery), 'فرمت حق خوار و بار باید یک عدد صحیح باشد!'
+            assert not int(right_to_grocery) == 0, 'حق خوار و بار باید از 0 بزرگتر باشد!'
+
             if details.is_valid():
                 print('form is valid')
                 new_decree = details.save(commit=False)

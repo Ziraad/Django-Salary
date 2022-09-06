@@ -64,7 +64,7 @@ class Decree(models.Model):
                                     max_length=20, choices=TYPE_OF_RULE, default='Private')
     type_of_employment = models.CharField('نوع استخدام',
                                           max_length=20, choices=TYPE_OF_EMPLOYMENT, default='Contractual')
-    base_salary = models.IntegerField('حقوق پایه', default=0)
+    base_salary = models.IntegerField('حقوق پایه', default=0, null=True, blank=True)
     base_years = models.IntegerField('سنوات', default=0, null=True, blank=True)
     reward = models.IntegerField('پاداش', default=0, null=True, blank=True)
     right_to_housing = models.IntegerField('حق مسکن', default=0, null=True, blank=True)
@@ -176,9 +176,9 @@ class SalaryReceipt(models.Model):
             decree = get_object_or_404(Decree, person=person, year=year)
             right_to_housing = decree.right_to_housing
             right_to_grocery = decree.right_to_grocery
-            number_of_children = decree.person.number_of_children
             print('decree: ', decree)
             number_of_children = decree.person.number_of_children
+            right_of_children = decree.right_of_children
             print('number_of_children: ', number_of_children)
             base_salary = decree.base_salary
             print('base_salary: ', base_salary)
@@ -195,7 +195,7 @@ class SalaryReceipt(models.Model):
             print('right_of_house: ', self.right_of_house)
             self.right_of_grocery = int(right_to_grocery / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
             print('right_of_grocery: ', self.right_of_grocery)
-            self.right_of_children = int(number_of_children * float(number_of_children) * float(working_days))
+            self.right_of_children = int(number_of_children) * (int(right_of_children) / 31) * int(working_days)
             print('right_of_children: ', self.right_of_children)
 
             self.sub_total_wage = int(self.monthly_wage) + int(self.overtime_wage) + int(self.closed_work_wage) + int(

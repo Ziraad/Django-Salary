@@ -172,6 +172,9 @@ class DecreeForm(forms.ModelForm):
         self.fields['type_of_employment'].required = True
         self.fields['year'].required = False
         self.fields['base_salary'].required = False
+        self.fields['right_of_children'].required = False
+        self.fields['right_to_housing'].required = False
+        self.fields['right_to_grocery'].required = False
         self.fields['job_title'].required = False
         # self.fields['description'].required = False
 
@@ -180,19 +183,20 @@ class DecreeForm(forms.ModelForm):
         # fields = "__all__"
         exclude = ['created_by']
         labels = {
-            'company': _('نام شرکت'),
-            'person': _('پرسنل'),
-            'year': _('سال'),
-            'type_of_rule': _('نوع حکم'),
-            'type_of_employment': _('نوع استخدام'),
-            'base_salary': _('حقوق پایه(روزانه)'),
+            'company': _('نام شرکت*'),
+            'person': _('پرسنل*'),
+            'year': _('سال*'),
+            'type_of_rule': _('نوع حکم*'),
+            'type_of_employment': _('نوع استخدام*'),
+            'base_salary': _('حقوق پایه(روزانه)*'),
             'base_years': _('پایه سنوات(روزانه)'),
             'reward': _('پاداش'),
-            'right_to_housing': _('حق مسکن(ماهانه)'),
-            'right_to_grocery': _('حق خوار و بار(ماهانه)'),
+            'right_to_housing': _('حق مسکن(ماهانه)*'),
+            'right_to_grocery': _('حق خوار و بار(ماهانه)*'),
             'right_to_supervisor': _('حق سرپرستی(روزانه)'),
+            'right_of_children': _('حق اولاد(ماهانه)*'),
             'service_location': _('محل خدمت'),
-            'job_title': _('عنوان شغلی'),
+            'job_title': _('عنوان شغلی*'),
         }
 
         widgets = {
@@ -251,6 +255,12 @@ class DecreeForm(forms.ModelForm):
                                 'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
                                 'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'right_to_grocery': forms.TextInput(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'right_of_children': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
                                 'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
                                 'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
