@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -8,6 +9,7 @@ from salary.views import represents_int
 from django.template.defaulttags import register
 
 
+@login_required
 def persons(request):
     all_person = Person.objects.filter(company__accountant=request.user)
     context = {
@@ -37,6 +39,7 @@ def persons(request):
     return render(request, 'person/persons.html', context)
 
 
+@login_required
 def add_person(request):
     if request.method == 'POST':
         details = PersonForm(request.POST, request.FILES, request=request)
@@ -55,6 +58,7 @@ def add_person(request):
         return render(request, 'person/add_person.html', {'form': form})
 
 
+@login_required
 def decrees(request):
     all_decrees = Decree.objects.filter(created_by=request.user)
     context = {
@@ -70,6 +74,7 @@ def decrees(request):
     return render(request, 'person/decrees.html', context)
 
 
+@login_required
 def add_decree(request):
     if request.method == 'POST':
         details = DecreeForm(request.POST, request=request)
@@ -138,6 +143,7 @@ def add_decree(request):
 #         return render(request, 'person/add_decree.html', {'form': form})
 
 
+@login_required
 def wages(request):
     all_wage = SalaryReceipt.objects.filter(created_by=request.user)
 
@@ -154,6 +160,7 @@ def wages(request):
     return render(request, 'person/wages.html', context)
 
 
+@login_required
 def add_wage(request):
     if request.method == 'POST':
         details = SalaryReceiptForm(request.POST, request=request)
@@ -243,6 +250,7 @@ def add_wage(request):
         return render(request, 'person/add_wage.html', {'form': form})
 
 
+@login_required
 def wage_detail(request, wage_id):
     wage = get_object_or_404(SalaryReceipt, id=wage_id)
     context = {
