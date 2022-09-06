@@ -9,10 +9,8 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <link rel="stylesheet" href="{% static 'salary/css/output.css' %}">
             <title>حقوق و دستمزد - اضافه کردن پرسنل جدید</title>
-            <link
-                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-                    rel="stylesheet"
-            />
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
             <script
                     src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
                     defer
@@ -39,9 +37,10 @@
     <section class="my-32 text-gray-700 dark:text-gray-200 text-center md:text-right">
         <h2 class="text-3xl font-bold mb-12 text-center">فیش حقوقی شما</h2>
 
-        <div class="mx-auto max-w-4xl mb-2">
-            <button class="w-24 h-8 text-xs rounded bg-gray-100 dark:bg-gray-700" id="pdfButton">دریافت
-                فایل PDF
+        <div class="flex mx-auto max-w-4xl mb-2">
+            <button class="w-24 h-8 flex-model gap-1 px-1 text-xs rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-900dark:hover:border dark:hover:border-gray-700 tr-model-100"
+                    id="pdfButton">دریافت فایل
+                <span class="material-symbols-rounded hover:text-red-500 tr-model-100">picture_as_pdf</span>
             </button>
         </div>
         <div id="makepdf"
@@ -167,7 +166,7 @@
 
         const opt = {
             margin: 1,
-            filename: 'myfile.pdf',
+            filename: '{{ wage.person.last_name }}-{{ wage.month_name }}-{{ wage.year }}',
             image: {type: 'jpeg', quality: 0.98},
             html2canvas: {scale: 4},
             jsPDF: {unit: 'in', format: 'a4', orientation: 'portrait'}

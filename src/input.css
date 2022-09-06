@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
     @font-face {
         font-family: "vazir";
         src: url("../fonts/vazir-font/Farsi-Digits/Vazir-FD.eot");
@@ -39,9 +40,11 @@ html {
 body {
     @apply font-vazir;
 }
-.form-select{
-    background-position: left  0.75rem center !important;
+
+.form-select {
+    background-position: left 0.75rem center !important;
 }
+
 /*.screen {*/
 /*    @apply mx-auto md:max-w-screen-xl p-2 md:p-4 my-4 md:my-8;*/
 /*}*/
@@ -87,6 +90,7 @@ body {
 .flex-model {
     @apply flex justify-center items-center;
 }
+
 /*.badge-z {*/
 /*    @apply flex justify-center items-center w-10 rounded-xl px-2 bg-danger text-onDanger;*/
 /*}*/
