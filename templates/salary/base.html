@@ -1,13 +1,17 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa-IR" dir="rtl">
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="fa-IR" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block extra_headers %}{% endblock %}
     <link rel="stylesheet" href="{% static 'salary/css/output.css' %}">
-{#    <link rel="stylesheet" href="../../salary/static/salary/css/output.css">#}
+    <script
+            src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+            defer
+    ></script>
+    <script src="{% static 'salary/js/init-alpine.js' %}"></script>
     <title>{% block title %}{% endblock %}</title>
 </head>
 

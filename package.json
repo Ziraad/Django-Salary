@@ -9,7 +9,6 @@
     "build": "tailwindcss build -i src/input.css -o salary/static/salary/css/output.css --minify"
   },
   "dependencies": {
-    "jspdf": "^2.5.1",
     "tw-elements": "^1.0.0-alpha12"
   }
 }
