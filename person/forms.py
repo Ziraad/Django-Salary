@@ -47,30 +47,36 @@ class PersonForm(forms.ModelForm):
         }
 
         widgets = {
-            'company': forms.Select(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                    'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                    'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                    'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'personnel_code': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal '
-                                                              'text-gray-700 '
-                                                              'bg-white bg-clip-padding border border-solid '
-                                                              'border-gray-300 '
-                                                              'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                              'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+            'company': forms.Select(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'personnel_code': forms.TextInput(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'first_name': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'last_name': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                         'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                         'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                         'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'last_name': forms.TextInput(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'nation_code': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             # 'id_code': forms.TextInput(
             #     attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
             #                     'bg-white bg-clip-padding border border-solid border-gray-300 '
@@ -78,34 +84,40 @@ class PersonForm(forms.ModelForm):
             #                     'focus:bg-white focus:border-blue-600 focus:outline-none'}),
             'date_of_birth': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'place_of_birth': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'father_name': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'education_degree': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'number_of_children': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'marital_status': forms.Select(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
 
         }
 
@@ -184,69 +196,84 @@ class DecreeForm(forms.ModelForm):
         }
 
         widgets = {
-            'company': forms.Select(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                    'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                    'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                    'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'person': forms.Select(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                   'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                   'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                   'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'year': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal '
-                                                    'text-gray-700 '
-                                                    'bg-white bg-clip-padding border border-solid '
-                                                    'border-gray-300 '
-                                                    'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                    'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'type_of_rule': forms.Select(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                         'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                         'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                         'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+            'company': forms.Select(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'person': forms.Select(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'year': forms.TextInput(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'type_of_rule': forms.Select(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'type_of_employment': forms.Select(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'base_salary': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'base_years': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'reward': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'right_to_housing': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'right_to_grocery': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'right_to_supervisor': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'service_location': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'job_title': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
         }
         type_of_employment = forms.ModelMultipleChoiceField(queryset=TypeOfEmployment.objects.all())
 
@@ -285,38 +312,46 @@ class SalaryReceiptForm(forms.ModelForm):
         }
 
         widgets = {
-            'person': forms.Select(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                   'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                   'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                   'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'month_name': forms.Select(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                   'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                   'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                   'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'year': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal '
-                                                    'text-gray-700 '
-                                                    'bg-white bg-clip-padding border border-solid '
-                                                    'border-gray-300 '
-                                                    'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                    'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+            'person': forms.Select(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'month_name': forms.Select(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'year': forms.TextInput(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'working_days': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'overtime': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'closed_work': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'mission': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
         }

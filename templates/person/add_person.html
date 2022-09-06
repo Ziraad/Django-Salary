@@ -39,11 +39,11 @@
             اضافه کردن پرسنل جدید
         </h2>
 
-        <div class="block mx-auto m-6 p-6 border rounded-lg shadow-lg bg-white w-full">
+        <div class="w-full block dark:focus:bg-gray-700 dark:focus:border-gray-800 dark:focus:text-gray-400 mx-auto m-6 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-800">
             <form class="w-full" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% if error %}
-                    <div class="bg-red-100 rounded-lg py-5 px-6 mb-3 text-base text-red-700 inline-flex items-center w-full"
+                    <div class="bg-red-100 text-red-700 dark:bg-gray-700 dark:text-red-500 dark:border dark:border-red-600 rounded-lg py-5 px-6 mb-3 text-base inline-flex items-center w-full"
                          role="alert">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times-circle"
                              class="w-4 h-4 ml-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg"
