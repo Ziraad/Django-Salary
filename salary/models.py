@@ -75,6 +75,7 @@ class Decree(models.Model):
     job_title = models.CharField('عنوان شغل', max_length=50)
     organizational_unit = models.CharField('واحد سازمانی', max_length=50, null=True, blank=True)
     organizational_position = models.CharField('پست سازمانی', max_length=50, null=True, blank=True)
+    date_of_hire = models.CharField('تاریخ استخدام', max_length=10)
     created = models.DateTimeField('ایجاد شده در', auto_now_add=True)
     updated = models.DateTimeField('به روز رسانی در', auto_now=True)
 

@@ -89,11 +89,15 @@
                         <div>{{ form.job_title }}</div>
                     </div>
                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.base_salary.label }}</div>
-                        <div>{{ form.base_salary }}</div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.date_of_hire.label }}</div>
+                        <div>{{ form.date_of_hire }}</div>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-4 gap-4 mb-4">
+                    <div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.base_salary.label }}</div>
+                        <div>{{ form.base_salary }}</div>
+                    </div>
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.base_years.label }}</div>
                         <div>{{ form.base_years }}</div>
@@ -106,12 +110,12 @@
                         <div class="mb-2 text-sm text-gray-500">{{ form.right_to_housing.label }}</div>
                         <div>{{ form.right_to_housing }}</div>
                     </div>
+                </div>
+                <div class="grid md:grid-cols-4 gap-4 mb-4">
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.right_to_grocery.label }}</div>
                         <div>{{ form.right_to_grocery }}</div>
                     </div>
-                </div>
-                <div class="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.right_to_supervisor.label }}</div>
                         <div>{{ form.right_to_supervisor }}</div>
