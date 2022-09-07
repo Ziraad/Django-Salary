@@ -12,6 +12,12 @@
                     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
                     rel="stylesheet"
             />
+
+            <link rel="stylesheet" href="{% static 'salary/css/persian-datepicker.css' %}"/>
+            <script src="{% static 'salary/js/jquery-3.6.1.min.js' %}"></script>
+            <script src="{% static 'salary/js/persian-date.js' %}"></script>
+            <script src="{% static 'salary/js/persian-datepicker.js' %}"></script>
+
             <script
                     src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
                     defer
@@ -138,4 +144,19 @@
             </form>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log('in  jquery')
+            $("#mydate").persianDatepicker({
+                altField: '#mydate',
+                altFormat: "YYYY/MM/DD",
+                observer: true,
+                format: 'YYYY/MM/DD',
+                initialValue: false,
+                initialValueType: 'persian',
+                autoClose: true,
+                maxDate: 'today',
+            });
+        });
+    </script>
 {% endblock %}

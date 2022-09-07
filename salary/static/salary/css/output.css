@@ -4763,10 +4763,6 @@ textarea.form-control.is-invalid {
   width: 0.875rem;
 }
 
-.w-32 {
-  width: 8rem;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -6414,11 +6410,6 @@ body {
     color: rgb(239 68 68 / var(--tw-text-opacity));
   }
 
-  .dark\:text-gray-700 {
-    --tw-text-opacity: 1;
-    color: rgb(55 65 81 / var(--tw-text-opacity));
-  }
-
   .dark\:placeholder-gray-500::-moz-placeholder {
     --tw-placeholder-opacity: 1;
     color: rgb(107 114 128 / var(--tw-placeholder-opacity));
@@ -6434,23 +6425,9 @@ body {
     color: rgb(192 132 252 / var(--tw-text-opacity));
   }
 
-  .dark\:hover\:border:hover {
-    border-width: 1px;
-  }
-
-  .dark\:hover\:border-gray-700:hover {
-    --tw-border-opacity: 1;
-    border-color: rgb(55 65 81 / var(--tw-border-opacity));
-  }
-
   .dark\:hover\:bg-gray-800:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(31 41 55 / var(--tw-bg-opacity));
-  }
-
-  .dark\:hover\:bg-gray-900:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
   }
 
   .dark\:hover\:bg-gray-700:hover {
