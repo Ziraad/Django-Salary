@@ -99,7 +99,9 @@ def add_decree(request):
             assert len(job_title) > 0, 'عنوان شغلی را وارد کنید'
             assert len(job_title) > 3, 'تعدا کاراکترهای عنوان شغلی باید از 3 بیشتر باشد'
             assert len(date_of_hire) > 0, 'تاریخ استخدام را وارد کنید'
-            assert represents_int(date_of_hire.replace('/', '').replace('-', '')), 'فرمت تاریخ استخدام صحیح نمی باشد'
+            assert represents_int(date_of_hire.replace('/', '').replace('-', '')), 'فرمت تاریخ استخدام صحیح نمی باشد!' \
+                                                                                   'فرمت های قابل قبول: 1401/06/01 **' \
+                                                                                   ' 1401-06-01 '
             edited_date_of_hire = int(date_of_hire.replace('/', '').replace('-', ''))
             assert int(date_of_hire[:4]) <= int(year), 'تاریخ استخدام وارد شده بعد از سال مورد نظر است!'
             assert len(base_salary) > 0, 'حقوق پایه را وارد کنید'
@@ -260,3 +262,12 @@ def wage_detail(request, wage_id):
         'wage': wage,
     }
     return render(request, 'salary/wage_detail.html', context)
+
+
+@login_required
+def decree_detail(request, decree_id):
+    decree = get_object_or_404(Decree, id=decree_id)
+    context = {
+        'decree': decree,
+    }
+    return render(request, 'salary/decree_detail.html', context)

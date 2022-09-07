@@ -4695,6 +4695,14 @@ textarea.form-control.is-invalid {
   height: 8rem;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
 .max-h-0 {
   max-height: 0px;
 }
@@ -4761,6 +4769,14 @@ textarea.form-control.is-invalid {
 
 .w-3\.5 {
   width: 0.875rem;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
+.w-16 {
+  width: 4rem;
 }
 
 .min-w-0 {
@@ -5067,6 +5083,10 @@ textarea.form-control.is-invalid {
 
 .border-r {
   border-right-width: 1px;
+}
+
+.border-l {
+  border-left-width: 1px;
 }
 
 .border-solid {

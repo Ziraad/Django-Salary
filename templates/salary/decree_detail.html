@@ -1,0 +1,213 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+{% block head %}
+    {% block extra_headers %}
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <link rel="stylesheet" href="{% static 'salary/css/output.css' %}">
+            <title>حقوق و دستمزد - مشاهده اطلاعات حکم</title>
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+            <script
+                    src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+                    defer
+            ></script>
+            <script src="{% static 'salary/js/init-alpine.js' %}"></script>
+            <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+            />
+            <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                    defer
+            ></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+            <script src=".{% static 'salary/js/charts-lines.js' %}" defer></script>
+            <script src="{% static 'salary/js/charts-pie.js' %}" defer></script>
+        </head>
+    {% endblock %}
+{% endblock %}
+{% block title %}{{ super }} داشبورد {% endblock %}
+{% block body %}
+    <section class="my-32 text-gray-700 dark:text-gray-200 text-center md:text-right">
+        <h2 class="text-3xl font-bold mb-12 text-center">حکم حقوقی شما</h2>
+
+        <div class="flex mx-auto max-w-4xl mb-2">
+            <button class="w-24 h-8 flex-model gap-1 px-1 text-xs rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 tr-model-100"
+                    id="pdfButton">دریافت فایل
+                <span class="material-symbols-rounded text-gray-600 dark:text-gray-400 hover:text-red-500 tr-model-100">picture_as_pdf</span>
+            </button>
+        </div>
+        <div id="makepdf"
+             class="block mx-auto p-6 rounded-lg shadow-lg border bg-white dark:bg-gray-800 dark:border-gray-700 max-w-4xl">
+            <div class="flex flex-col">
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="overflow-hidden">
+                            <div class="font-bold text-gray-800 dark:text-gray-400 text-center my-2 p-2">
+                                <div class="flex-model gap-4 mb-4">
+                                    <div class="">
+                                        <img class="w-16 h-16" src="{{ decree.company.logo.url }}"
+                                             alt="{{ decree.company }}">
+                                    </div>
+                                    <div class="">
+                                        <span>{{ decree.company }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between text-right mb-2 border px-2">
+                                    <div class="flex-model gap-2 p-2 border-l">
+                                        <span>نام:</span>
+                                        <span>{{ decree.person.first_name }}</span>
+                                    </div>
+                                    <div class="flex-model gap-2 p-2 border-l">
+                                        <span>نام خانوادگی:</span>
+                                        <span>{{ decree.person.last_name }}</span>
+                                    </div>
+                                    <div class="flex-model gap-2 p-2">
+                                        <span>کد پرسنلی:</span>
+                                        <span>{{ decree.person.personnel_code }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between text-right mb-2 border">
+                                    <div class="flex-model gap-2 p-2 border-r border-l">
+                                        <span>نام پدر:</span>
+                                        <span>{{ decree.person.father_name }}</span>
+                                    </div>
+                                    <div class="flex-model gap-2 p-2 border-l">
+                                        <span>تاریخ تولد:</span>
+                                        <span>{{ decree.person.full_name }}</span>
+                                    </div>
+                                    <div class="flex gap-2 p-2 border-l">
+                                        <span>محل تولد:</span>
+                                        <span>{{ decree.person.full_name }}</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between text-right mb-4 border">
+                                    <div class="flex-model gap-2 p-2 border-l">
+                                        <span>تاریخ استخدام:</span>
+                                        <span>{{ decree.date_of_hire }}</span>
+                                    </div>
+                                    <div class="flex-model gap-2 p-2">
+                                        <span>عنوان شغلی:</span>
+                                        <span>{{ decree.job_title }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {#                            <table class="min-w-full border dark:border-gray-700 text-center">#}
+                            {#                                <thead class="border-b">#}
+                            {##}
+                            {#                                </thead>#}
+                            {#                                <tbody>#}
+                            {#                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">#}
+                            {#                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">#}
+                            {#                                        حقوق ماهیانه#}
+                            {#                                    </td>#}
+                            {#                                    <td class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap border-r dark:border-gray-700">#}
+                            {#                                        {{ wage.monthly_wage | intcomma:False }}#}
+                            {#                                    </td>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">#}
+                            {#                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">#}
+                            {#                                        اضافه کاری#}
+                            {#                                    </td>#}
+                            {#                                    <td colspan="2"#}
+                            {#                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">#}
+                            {#                                        {{ wage.overtime_wage | intcomma:False }}#}
+                            {#                                    </td>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">#}
+                            {#                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">#}
+                            {#                                        تعطیل کاری#}
+                            {#                                    </td>#}
+                            {#                                    <td colspan="2"#}
+                            {#                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">#}
+                            {#                                        {{ wage.closed_work_wage | intcomma:False }}#}
+                            {#                                    </td>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">#}
+                            {#                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">#}
+                            {#                                        مأموریت#}
+                            {#                                    </td>#}
+                            {#                                    <td colspan="2"#}
+                            {#                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">#}
+                            {#                                        {{ wage.mission_wage | intcomma:False }}#}
+                            {#                                    </td>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">#}
+                            {#                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">#}
+                            {#                                        حق خوار و بار#}
+                            {#                                    </td>#}
+                            {#                                    <td colspan="2"#}
+                            {#                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">#}
+                            {#                                        {{ wage.right_of_grocery | intcomma:False }}#}
+                            {#                                    </td>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">#}
+                            {#                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">#}
+                            {#                                        حق مسکن#}
+                            {#                                    </td>#}
+                            {#                                    <td colspan="2"#}
+                            {#                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">#}
+                            {#                                        {{ wage.right_of_house | intcomma:False }}#}
+                            {#                                    </td>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">#}
+                            {#                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">#}
+                            {#                                        حق اولاد#}
+                            {#                                    </td>#}
+                            {#                                    <td colspan="2"#}
+                            {#                                        class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">#}
+                            {#                                        {{ wage.right_of_children | intcomma:False }}#}
+                            {#                                    </td>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">#}
+                            {#                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-800 dark:text-gray-200 border-r dark:border-gray-700">#}
+                            {#                                        جمع حقوق و دستمزد ناخالص#}
+                            {#                                    </td>#}
+                            {#                                    <td colspan="2"#}
+                            {#                                        class="text-sm text-green-500 font-black px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">#}
+                            {#                                        {{ wage.sub_total_wage | intcomma:False }}#}
+                            {#                                    </td>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                </tbody>#}
+                            {#                            </table>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        const button = document.getElementById("pdfButton");
+        const makepdf = document.getElementById("makepdf");
+        {#const {jsPDF} = window.jspdf;#}
+        {##}
+        {#        const doc = new jsPDF('p', 'pt', 'a4');#}
+
+        const opt = {
+            margin: 1,
+            filename: '{{ decree.person.full_name }}-{{ decree.year }}',
+            image: {type: 'jpeg', quality: 0.98},
+            html2canvas: {scale: 4},
+            jsPDF: {unit: 'in', format: 'a4', orientation: 'portrait'}
+        };
+        button.addEventListener("click", function () {
+            console.log('pdf button clicked')
+            html2pdf().set(opt).from(makepdf).save();
+        });
+    </script>
+{% endblock %}
