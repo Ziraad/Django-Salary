@@ -17,7 +17,9 @@ class CompanyForm(forms.ModelForm):
         self.fields['name'].required = False
         self.fields['company_type'].required = False
         self.fields['object'].required = False
+        self.fields['start_of_activity'].required = False
         self.fields['address'].required = False
+        self.fields['logo'].required = False
         self.fields['description'].required = False
 
     # specify the name of model to use
@@ -30,6 +32,7 @@ class CompanyForm(forms.ModelForm):
             'company_type': _('نوع شرکت'),
             'logo': _('لوگو'),
             'object': _('موضوع فعالیت'),
+            'start_of_activity': _('تاریخ شروع فعالیت'),
             'address': _('آدرس'),
             'description': _('توضیحات'),
         }
@@ -56,6 +59,15 @@ class CompanyForm(forms.ModelForm):
                                 'bg-white bg-clip-padding border border-solid border-gray-300 '
                                 'rounded transition ease-in-out m-0 focus:text-gray-700 '
                                 'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+            'start_of_activity': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal '
+                                                                 'text-gray-700 '
+                                                                 'bg-white bg-clip-padding border border-solid '
+                                                                 'border-gray-300 '
+                                                                 'rounded transition ease-in-out m-0 '
+                                                                 'focus:text-gray-700 focus:text-base '
+                                                                 'focus:bg-white focus:border-blue-600 '
+                                                                 'focus:outline-none',
+                                                        'placeholder': '1401/01/01'}),
             'address': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
                                                        'bg-white bg-clip-padding border border-solid border-gray-300 '
                                                        'rounded transition ease-in-out m-0 focus:text-gray-700 '
@@ -78,6 +90,7 @@ class CompanyForm(forms.ModelForm):
         # extract the username and text field from the data
         name = self.cleaned_data.get('name')
         object_company = self.cleaned_data.get('object')
+        start_of_activity = self.cleaned_data.get('start_of_activity')
 
         # conditions to be met for the name length
         if len(name) < 2 or len(name) == 0:
@@ -94,5 +107,9 @@ class CompanyForm(forms.ModelForm):
         if len(object_company) > 200:
             self._errors['object'] = self.error_class([
                 'موضوع فعالیت شرکت باید کمتر از 200 کاراکتر باشد!'])
+
+        if len(start_of_activity) <= 0:
+            self._errors['start_of_activity'] = self.error_class([
+                'تاریخ شروع فعالیت را وارد کنید!'])
 
         return self.cleaned_data

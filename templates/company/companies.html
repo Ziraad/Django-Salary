@@ -39,7 +39,7 @@
             شرکت ها
         </h2>
         <div class="w-40 my-8">
-            <a href="{% url 'accounts:add_company' %}"
+            <a href="{% url 'accounts:companies:add_company' %}"
                class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
             >
                 ایجاد شرکت جدید
@@ -213,34 +213,55 @@
                                     {% if company.is_active == True %}
                                         <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">تایید شده</span>
                                     {% else %}
-                                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-green-700 dark:text-green-100">تایید نشده</span>
+                                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">تایید نشده</span>
                                     {% endif %}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     {{ company.created |date:"M d, Y" }}
                                 </td>
-                                <td class="px-4 py-3 text-xs">
-                                    <form action="" method="post">
-                                        {% csrf_token %}
-                                        <div>
-                                            {% if company.is_active == True %}
-                                                <button type="submit" name="deactivate" value="{{ company.slug }}"
-                                                        class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
-                                                    عدم تایید
-                                                </button>
-                                            {% else %}
-                                                <button type="submit" name="activate" value="{{ company.slug }}"
-                                                        class="px-2 py-1 font-semibold leading-tight text-green-100 bg-green-600 rounded-full">
-                                                    تایید
-                                                </button>
-                                            {% endif %}
-                                            <button type="submit" name="delete" value="{{ company.slug }}"
-                                                    class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
-                                                حذف
-                                            </button>
-                                        </div>
+                                <td class="px-4 py-3 text-xs flex justify-start">
+                                    <div class="flex-model gap-2">
+                                        <a href="{{ company.get_absolute_url }}" class="hover:text-blue-700"
+                                           data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده اطلاعات شرکت">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="hover:text-blue-700"
+                                           data-bs-toggle="tooltip" data-bs-placement="top" title="ویرایش اطلاعات شرکت">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
+                                            </svg>
 
-                                    </form>
+                                        </a>
+
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            <div>
+                                                {% if company.is_active == True %}
+                                                    <button type="submit" name="deactivate" value="{{ company.slug }}"
+                                                            class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
+                                                        عدم تایید
+                                                    </button>
+                                                {% else %}
+                                                    <button type="submit" name="activate" value="{{ company.slug }}"
+                                                            class="px-2 py-1 font-semibold leading-tight text-green-100 bg-green-600 rounded-full">
+                                                        تایید
+                                                    </button>
+                                                {% endif %}
+                                                <button type="submit" name="delete" value="{{ company.slug }}"
+                                                        class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
+                                                    حذف
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         {% endfor %}

@@ -42,7 +42,7 @@
         <div class="block mx-auto m-6 p-6 border rounded-lg shadow-lg bg-white max-w-xl">
             <form class="w-full" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {% if message %}
+                {% if error %}
                     <div class="bg-red-100 rounded-lg py-5 px-6 mb-3 text-base text-red-700 inline-flex items-center w-full"
                          role="alert">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times-circle"
@@ -65,11 +65,18 @@
                         {{ form.company_type }}
                     </div>
                 </div>
-                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div class="grid mb-4">
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.object.label }}</div>
                         <div>{{ form.object }}</div>
                         <span class="mt-1 text-xs text-red-500">{{ form.object.errors }}</span>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.start_of_activity.label }}</div>
+                        <div>{{ form.start_of_activity }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.start_of_activity.errors }}</span>
                     </div>
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.logo.label }}</div>
@@ -84,12 +91,12 @@
                     <div class="mb-2 text-sm text-gray-500">{{ form.description.label }}</div>
                     <div>{{ form.description }}</div>
                 </div>
-{#                                {% for field in form %}#}
-{#                                    <div class="mb-2">#}
-{#                                        {{ field.errors }}#}
-{#                                        <span class="text-gray-600">{{ field.label_tag }}</span> {{ field }}#}
-{#                                    </div>#}
-{#                                {% endfor %}#}
+                {#                                {% for field in form %}#}
+                {#                                    <div class="mb-2">#}
+                {#                                        {{ field.errors }}#}
+                {#                                        <span class="text-gray-600">{{ field.label_tag }}</span> {{ field }}#}
+                {#                                    </div>#}
+                {#                                {% endfor %}#}
                 <button type="submit"
                         class="w-full px-6 py-2.5 mt-4 bg-blue-600 text-white font-medium leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                     ثبت

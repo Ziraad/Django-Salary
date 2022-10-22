@@ -1,0 +1,153 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+{% block head %}
+    {% block extra_headers %}
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <link rel="stylesheet" href="{% static 'salary/css/output.css' %}">
+            <title>حقوق و دستمزد - اطلاعات پرسنل</title>
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+            <script
+                    src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+                    defer
+            ></script>
+            <script src="{% static 'salary/js/init-alpine.js' %}"></script>
+            <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+            />
+            <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                    defer
+            ></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+            <script src=".{% static 'salary/js/charts-lines.js' %}" defer></script>
+            <script src="{% static 'salary/js/charts-pie.js' %}" defer></script>
+        </head>
+    {% endblock %}
+{% endblock %}
+{% block title %}{{ super }} داشبورد {% endblock %}
+{% block body %}
+    <section class="my-32 text-gray-700 dark:text-gray-200 text-center md:text-right">
+        <h2 class="text-3xl font-bold mb-12 text-center">اطلاعات پرسنل</h2>
+
+        <div class="flex mx-auto max-w-4xl mb-2">
+            <button class="w-24 h-8 flex-model gap-1 px-1 text-xs rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800 tr-model-100"
+                    id="pdfButton">دریافت فایل
+                <span class="material-symbols-rounded text-gray-600 dark:text-gray-400 hover:text-red-500 tr-model-100">picture_as_pdf</span>
+            </button>
+        </div>
+        <div id="makepdf"
+             class="block mx-auto p-6 rounded-lg shadow-lg border bg-white dark:bg-gray-800 dark:border-gray-700 max-w-4xl">
+            <div class="flex flex-col">
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="overflow-hidden">
+                            <div class="font-bold text-gray-800 dark:text-gray-400 text-center my-2 p-2">
+                                <div class="flex-model gap-4 mb-4">
+                                    <img
+                                            class="object-cover text-xs w-8 h-8 md:w-12 md:h-12 rounded"
+                                            src="{{ person.image.url }}"
+                                            alt="{{ person.first_name }}"
+                                            loading="lazy"
+                                    />
+                                    <div class="">
+                                        <span>{{ person.first_name }} {{ person.last_name }}</span>
+                                    </div>
+                                </div>
+
+                                <table class="min-w-full border dark:border-gray-700 text-center">
+                                    <thead class="border-b">
+
+                                    </thead>
+                                    <tbody>
+                                    <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-800 dark:text-gray-500 border-r dark:border-gray-700">
+                                            نوع شرکت
+                                        </td>
+                                        <td class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap border-r dark:border-gray-700">
+                                            {{ company.company_type }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-800 dark:text-gray-500 border-r dark:border-gray-700">
+                                            موضوع فعالیت
+                                        </td>
+                                        <td
+                                            class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                            {{ company.object }}
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                            شروع فعالیت
+                                        </td>
+                                        <td colspan="2"
+                                            class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                            {{ company.start_of_activity }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                            حسابدار
+                                        </td>
+                                        <td colspan="2"
+                                            class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                            {% if company.accountant.name %}{{ company.accountant.name }}
+                                            {% else %}
+                                                {{ company.accountant }}
+                                            {% endif %}
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                            آدرس
+                                        </td>
+                                        <td colspan="2"
+                                            class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                            {{ company.address }}
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-gray-800 dark:text-gray-400 border-r dark:border-gray-700">
+                                            توضیحات
+                                        </td>
+                                        <td colspan="2"
+                                            class="text-sm text-gray-900 dark:text-gray-200 font-light px-6 py-4 whitespace-nowrap text-center border-r dark:border-gray-700">
+                                            {{ company.description }}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <script>
+        const button = document.getElementById("pdfButton");
+        const makepdf = document.getElementById("makepdf");
+        {#const {jsPDF} = window.jspdf;#}
+        {##}
+        {#        const doc = new jsPDF('p', 'pt', 'a4');#}
+
+        const opt = {
+            margin: 1,
+            filename: '{{ wage.person.last_name }}-{{ wage.month_name }}-{{ wage.year }}',
+            image: {type: 'jpeg', quality: 0.98},
+            html2canvas: {scale: 4},
+            jsPDF: {unit: 'in', format: 'a4', orientation: 'portrait'}
+        };
+        button.addEventListener("click", function () {
+            console.log('pdf button clicked')
+            html2pdf().set(opt).from(makepdf).save();
+        });
+    </script>
+{% endblock %}

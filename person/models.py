@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from company.models import Company
 
@@ -36,3 +37,6 @@ class Person(models.Model):
 
     def __str__(self):
         return '{} - {} {}'.format(self.personnel_code, self.first_name, self.last_name)
+
+    def get_absolute_url(self):
+        return reverse("person:person_detail", kwargs={"nation_code": self.nation_code})

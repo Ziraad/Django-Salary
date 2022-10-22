@@ -176,7 +176,6 @@ class DecreeForm(forms.ModelForm):
         self.fields['right_to_housing'].required = False
         self.fields['right_to_grocery'].required = False
         self.fields['job_title'].required = False
-        self.fields['date_of_hire'].required = False
         # self.fields['description'].required = False
 
     class Meta:
@@ -198,7 +197,6 @@ class DecreeForm(forms.ModelForm):
             'right_of_children': _('حق اولاد(ماهانه)*'),
             'service_location': _('محل خدمت'),
             'job_title': _('عنوان شغلی*'),
-            'date_of_hire': _('تاریخ استخدام*'),
         }
 
         widgets = {
@@ -286,13 +284,6 @@ class DecreeForm(forms.ModelForm):
                                 'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
                                 'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
                                 'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
-            'date_of_hire': forms.TextInput(
-                attrs={'class': 'myclass block w-full px-3 py-1.5 text-sm font-normal text-gray-700 '
-                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
-                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
-                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
-                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700',
-                       'id': 'mydate'}),
         }
         type_of_employment = forms.ModelMultipleChoiceField(queryset=TypeOfEmployment.objects.all())
 

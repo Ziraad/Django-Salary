@@ -1,5 +1,5 @@
 from django import views
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'accounts'
@@ -16,6 +16,5 @@ urlpatterns = [
     path('forgotPassword/', views.forgot_password, name='forgot_password'),
     # path('resetpassword_validate/<uidb64>/<token>/', views.reset_password_validate, name='reset_password_validate'),
     # path('resetPassword/', views.reset_password, name='reset_password'),
-    path('companies/', views.company, name='company'),
-    path('add_company/', views.add_company, name='add_company'),
+    path('companies/', include('company.urls')),
 ]
