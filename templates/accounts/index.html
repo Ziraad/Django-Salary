@@ -33,11 +33,11 @@
 {% block title %}{{ super }} داشبورد {% endblock %}
 {% block body %}
     <div class="flex flex-col flex-1 w-full">
-            <h2
-                    class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
-            >
-                داشبورد
-            </h2>
+        <h2
+                class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+        >
+            داشبورد
+        </h2>
         <!-- CTA -->
         <a
                 class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
@@ -57,7 +57,7 @@
             </div>
             <span>نمایش بیشتر &LeftArrow;</span>
         </a>
-        <!-- Cards -->
+        <!-- Cards Top -->
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
             <!-- Card -->
             <div
@@ -167,6 +167,76 @@
                     </p>
                 </div>
             </div>
+        </div>
+
+        <!-- Cards Desk -->
+        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+            <!-- Card -->
+            <a href="{% url 'accounts:companies:add_company' %}"
+               class="flex-model gap-2 p-4 bg-purple-600 hover:bg-purple-700 tr-model-100 rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="p-3 text-white bg-purple-800 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="mb-2 text-sm font-medium text-white dark:text-gray-400">
+                        تعریف شرکت
+                    </p>
+                </div>
+            </a>
+            <!-- Card -->
+            <a href="{% url 'person:add_person' %}"
+               class="flex-model gap-2 p-4 bg-purple-600 hover:bg-purple-700 tr-model-100 rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="p-3 text-white bg-purple-800 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"></path>
+                    </svg>
+
+                </div>
+                <div>
+                    <p class="mb-2 text-sm font-medium text-white dark:text-gray-400">
+                        تعریف پرسنل
+                    </p>
+                </div>
+            </a>
+            <!-- Card -->
+            <a href="{% url 'person:add_decree' %}"
+               class="flex-model gap-2 p-4 bg-purple-600 hover:bg-purple-700 tr-model-100 rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="p-3 text-white bg-purple-800 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z"></path>
+                    </svg>
+
+                </div>
+                <div>
+                    <p class="mb-2 text-sm font-medium text-white dark:text-gray-400">
+                        صدور حکم جدید
+                    </p>
+                </div>
+            </a>
+            <!-- Card -->
+            <a href="{% url 'person:add_wage' %}"
+               class="flex-model gap-2 p-4 bg-purple-600 hover:bg-purple-700 tr-model-100 rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="p-3 text-white bg-purple-800 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="mb-2 text-sm font-medium text-white dark:text-gray-400">
+                        صدور فیش حقوقی
+                    </p>
+                </div>
+            </a>
         </div>
 
         <!-- New Table -->
