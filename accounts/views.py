@@ -1,13 +1,17 @@
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.encoding import force_bytes, force_str
 from django.urls import reverse
 from django.contrib import messages
+from .tokens import account_activation_token
 
 from company.forms import CompanyForm
 from company.models import Company
+from .forms import RegistrationForm
 from .models import UserBase
 
 # from SafeBox import settings
@@ -72,6 +76,31 @@ def register_user(request):
     usernames = [i.username.lower() for i in users]
     emails = [i.email for i in users]
     res = None
+    if request.method == 'POST':
+        print('post method')
+        registerForm = RegistrationForm(request.POST)
+        if registerForm.is_valid():
+            user = registerForm.save(commit=False)
+            user.email = registerForm.cleaned_data['email']
+            user.set_password(registerForm.cleaned_data['password'])
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            subject = 'Activate your Account'
+            message = render_to_string('accounts/pages/account_activation_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            user.email_user(subject=subject, message=message)
+            return render(request, 'accounts/pages/create-account.html', {'res': 'ثبت نام شما با موفقیت انجام شد. '
+                                                                                 'لطفاً برای تأیید حساب کاربری ایمیل '
+                                                                                 'خود را چک کنید.'})
+    else:
+        print('get method')
+        registerForm = RegistrationForm()
+    return render(request, 'accounts/pages/create-account.html', {'form': registerForm})
     # if request.method == 'POST' and request.is_ajax():
     #     register_form = RegisterForm(data=request.POST)
     #     email = request.POST.get('email')
@@ -98,7 +127,7 @@ def register_user(request):
     #     'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY,
     # }
 
-    return render(request, 'accounts/pages/create-account.html')
+    # return render(request, 'accounts/pages/create-account.html')
 
 
 # @login_required
@@ -175,6 +204,21 @@ def register_user(request):
 #         'message': message,
 #     }
 #     return render(request, 'accounts/change_pass.html', context=context)
+
+
+def account_activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = UserBase.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return redirect('account:dashboard')
+    else:
+        return render(request, 'accounts/pages/activation_invalid.html')
 
 
 def forgot_password(request):

@@ -308,7 +308,7 @@
                                                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                                                 ></path>
                                             </svg>
-                                            <span>{{ user.first_name }} {{ user.last_name }}</span>
+                                            <span>{{ user }}</span>
                                         </a>
                                     </li>
                                     <li class="flex">
@@ -389,7 +389,7 @@
                        class="inline-block px-6 py-2.5 mr-2 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
                        data-mdb-ripple="true" data-mdb-ripple-color="light">ورود
                     </a>
-                    <a href="{% url 'accounts:login' %}" type="button"
+                    <a href="{% url 'accounts:register_user' %}" type="button"
                        class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                        data-mdb-ripple="true" data-mdb-ripple-color="light">ثبت نام رایگان
                     </a>
