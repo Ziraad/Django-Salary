@@ -35,11 +35,14 @@
                     <div class="container mx-auto xl:px-32">
                         <div class="grid lg:grid-cols-2 gap-12 flex items-center">
                             <div class="mt-12 lg:mt-0">
-                                <h1 class="flex flex-col gap-2 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight leading-relaxed mb-12 dark:text-gray-400">
-                                    بهترین پیشنهاد
-                                    <br/><span class="text-blue-600 py-4">برای کسب و کار شما</span></h1>
+                                <h1 class="flex flex gap-2 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight leading-relaxed mb-12 dark:text-gray-400">
+                                    نرم افزار
+                                    <span class="text-blue-600 text-nowrap">حقوق و دستمزد</span>
+                                    آنلاین زیراد
+                                </h1>
+                                <p class="dark:text-gray-400 py-4">بصورت آنلاین و در زمان کوتاه فیش حقوقی صادر کن</p>
                                 <a class="inline-block px-7 py-3 mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                                   data-mdb-ripple="true" data-mdb-ripple-color="light" href="#!" role="button">شروع
+                                   data-mdb-ripple="true" data-mdb-ripple-color="light" href="{% url 'salary:salary' %}" role="button">شروع
                                     کنید</a>
                                 <a class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
                                    data-mdb-ripple="true" data-mdb-ripple-color="light" href="#!" role="button">اطلاعات
@@ -75,7 +78,7 @@
                                 با وارد کردن اطلاعات مورد نیاز در کمترین زمان حقوق و دستمزد خود را محاسبه کنید.
                             </p>
                             <a href="{% url 'salary:salary' %}" type="button"
-                               class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                               class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                                 کلیک کن
                             </a>
                         </div>
@@ -87,10 +90,10 @@
                             <p class="text-gray-700 dark:text-gray-400 text-base mb-4">
                                 با وارد کردن اطلاعات شرکت به راحتی حقوق و دستمزد پرسنل شرکت را مدیریت کنید.
                             </p>
-                            <button type="button"
-                                    class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                            <a href="{% url 'accounts:dashboard' %}" type="button"
+                               class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                                 کلیک کن
-                            </button>
+                            </a>
                         </div>
                     </div>
 

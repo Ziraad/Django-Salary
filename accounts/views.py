@@ -24,6 +24,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 
 
+@login_required
 def dashboard(request):
     return render(request, 'accounts/index.html')
 
@@ -209,7 +210,6 @@ def forgot_password(request):
 
     return render(request, 'accounts/pages/forgot-password.html')
 
-
 # def reset_password_validate(request, uidb64, token):
 #     try:
 #         uid = urlsafe_base64_decode(uidb64).decode()
@@ -247,5 +247,3 @@ def forgot_password(request):
 #             return redirect('accounts:reset_password')
 #     else:
 #         return render(request, 'accounts/resetPassword.html')
-
-
