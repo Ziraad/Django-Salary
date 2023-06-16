@@ -28,7 +28,7 @@ class BaseInfo(models.Model):
 
     year = models.CharField('سال', max_length=4, unique=True)
     base_salary = models.IntegerField('حقوق پایه')
-    base_years = models.IntegerField('پایه سنوات', blank=True)
+    base_years = models.IntegerField('پایه سنوات', default=0)
     right_to_housing = models.IntegerField('حق مسکن', null=True, blank=True)
     right_to_grocery = models.IntegerField('حق خوار و بار', null=True, blank=True)
     right_to_children = models.IntegerField('حق اولاد', null=True, blank=True)
@@ -133,30 +133,40 @@ class SalaryReceipt(models.Model):
         return reverse("person:wage_detail", kwargs={"wage_id": self.id})
 
     @staticmethod
-    def calculate_free_salary(base_salary, working_days, overtime, closed_work, mission, reward, number_of_children):
-        base_info = BaseInfo.objects.all().first()
-        monthly_wage = int(float(working_days) * float(base_salary))
-        overtime_wage = int(float(base_salary) / 7.33 * 1.4 * float(overtime))
-        closed_work_wage = int(float(base_salary) * 1.4 * float(closed_work))
-        mission_wage = int(float(base_salary) * 1.4 * float(mission))
-        right_of_house = int(base_info.right_to_housing / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
-        right_of_grocery = int(base_info.right_to_grocery / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
-        right_of_children = int(base_info.right_to_children * float(number_of_children) * float(working_days))  # fix
-        # bug 29 or 30 or 31 days
+    def calculate_free_salary(year, base_salary, base_years, working_days, overtime, closed_work, mission, reward,
+                              number_of_children, number_of_days):
+        try:
+            base_info = BaseInfo.objects.filter(year=year)
+            print('base info: ', base_info)
+            assert base_info.exists(), 'برای سال مورد نظر، حقوق و دستمزد تعریف نشده است'
+            base_info = BaseInfo.objects.get(base_years=base_years)
+            print('base info is get: ', base_info)
+            monthly_wage = int(float(working_days) * float(base_salary))
+            overtime_wage = int(float(base_salary) / 7.33 * 1.4 * float(overtime))
+            closed_work_wage = int(float(base_salary) * 1.4 * float(closed_work))
+            mission_wage = int(float(base_salary) * 1.4 * float(mission))
+            right_of_house = int(base_info.right_to_housing / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
+            right_of_grocery = int(base_info.right_to_grocery / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
+            right_of_children = int(
+                (base_info.right_to_children/number_of_days) * float(working_days) * float(number_of_children))  # fix
+            # bug 29 or 30 or 31 days
 
-        sub_total_wage = int(monthly_wage) + int(overtime_wage) + int(closed_work_wage) + int(
-            mission_wage) + int(right_of_house) + int(right_of_grocery) + int(right_of_children)
+            sub_total_wage = int(monthly_wage) + int(overtime_wage) + int(closed_work_wage) + int(
+                mission_wage) + int(right_of_house) + int(right_of_grocery) + int(right_of_children)
+            print('before return in def')
 
-        return {
-            'monthly_wage': monthly_wage,
-            'overtime_wage': overtime_wage,
-            'closed_work_wage': closed_work_wage,
-            'mission_wage': mission_wage,
-            'right_of_house': right_of_house,
-            'right_of_grocery': right_of_grocery,
-            'right_of_children': right_of_children,
-            'sub_total_wage': sub_total_wage
-        }
+            return {
+                'monthly_wage': monthly_wage,
+                'overtime_wage': overtime_wage,
+                'closed_work_wage': closed_work_wage,
+                'mission_wage': mission_wage,
+                'right_of_house': right_of_house,
+                'right_of_grocery': right_of_grocery,
+                'right_of_children': right_of_children,
+                'sub_total_wage': sub_total_wage
+            }
+        except Exception as e:
+            raise Exception(e)
 
     def calculate_salary(self, month_name, year, working_days, overtime, closed_work, mission):
         print('***********************************************************')

@@ -54,7 +54,7 @@
                                         name="month_name" aria-label="Default select example">
                                     {% if month_name %}
                                         <option value="{{ month_name }}" selected>{{ month_name }}</option>
-{#                                        <option value="فروردین">فروردین</option>#}
+                                        {#                                        <option value="فروردین">فروردین</option>#}
                                     {% else %}
                                         <option value="فروردین" selected>فروردین</option>
                                     {% endif %}
@@ -139,6 +139,30 @@
                                        max="31"
                                        maxlength="2"
                                        name="working_days"
+                                       value="0"
+                                       aria-describedby="emailHelp123">
+                            {% endif %}
+                        </div>
+                        <div class="form-group mb-6">
+                            <label for="base_years">پایه سنوات</label>
+                            {% if base_years %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="base_years"
+                                       min="0"
+                                       max="31"
+                                       maxlength="2"
+                                       name="base_years"
+                                       value="{{ base_years }}"
+                                       aria-describedby="emailHelp123">
+                            {% else %}
+                                <input type="text"
+                                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                       id="base_years"
+                                       min="0"
+                                       max="31"
+                                       maxlength="2"
+                                       name="base_years"
                                        value="0"
                                        aria-describedby="emailHelp123">
                             {% endif %}

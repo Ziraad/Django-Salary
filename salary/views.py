@@ -28,6 +28,7 @@ def salary(request):
         year = request.POST['year'].strip()
         company = request.POST['company'].strip()
         base_salary = request.POST['base_salary'].strip()
+        base_years = request.POST['base_years'].strip()
         working_days = request.POST['working_days'].strip()
         overtime = request.POST['overtime']
         closed_work = request.POST['closed_work'].strip()
@@ -46,6 +47,7 @@ def salary(request):
             'year': year,
             'company': company,
             'base_salary': base_salary,
+            'base_years': base_years,
             'working_days': working_days,
             'overtime': overtime,
             'closed_work': closed_work,
@@ -56,7 +58,7 @@ def salary(request):
             'number_of_children': number_of_children,
         }
 
-        weekly_days = {
+        monthly_years = {
             'فروردین': '31',
             'اردیبهشت': '31',
             'خرداد': '31',
@@ -78,11 +80,14 @@ def salary(request):
             assert len(last_name) >= 2, 'طول نام خانوادگی باید از 2 کاراکتر بیشتر باشد!'
             assert represents_int(year), 'فرمت سال باید یک عدد صحیح 4 رقمی باشد'
             assert represents_int(base_salary), 'فرمت حقوق روزانه باید یک عدد صحیح باشد!'
+            assert represents_int(base_years), 'فرمت پایه سنوات باید یک عدد صحیح باشد!'
             assert represents_int(working_days), 'فرمت روزهای کارکرد باید یک عدد صحیح باشد!'
+            assert int(working_days) > 0, 'تعداد روزهای کارکرد باید بیشتر از 0 باشد'
+            # assert int(working_days) < 31, 'تعداد روزهای کارکرد باید کمتر از 31 باشد'
             # number_of_days = 0
-            for key, value in weekly_days.items():
+            for key, value in monthly_years.items():
                 if month_name == key:
-                    number_of_days = int(weekly_days[key])
+                    number_of_days = int(monthly_years[key])
                     assert int(
                         working_days) <= number_of_days, f'تعداد روزهای ماه انتخاب شده باید {number_of_days} باشد'
                     break
@@ -92,10 +97,13 @@ def salary(request):
             assert represents_int(reward), 'فرمت پاداش باید یک عدد صحیح باشد!'
             assert represents_int(number_of_children), 'فرمت تعداد فرزندان مشمول باید یک عدد صحیح باشد!'
 
-            calculate_salary = SalaryReceipt.calculate_free_salary(base_salary=base_salary, working_days=working_days,
+            calculate_salary = SalaryReceipt.calculate_free_salary(base_salary=base_salary, year=year,
+                                                                   base_years=base_years, working_days=working_days,
                                                                    overtime=overtime, closed_work=closed_work,
                                                                    mission=mission, reward=reward,
+                                                                   number_of_days=number_of_days,
                                                                    number_of_children=number_of_children)
+            print('calculate salary data: ', calculate_salary)
 
             context['calculate_salary'] = calculate_salary
 

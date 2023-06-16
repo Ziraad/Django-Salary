@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import force_bytes, force_str
 from django.urls import reverse
 from django.contrib import messages
+
+from person.models import Person
 from .tokens import account_activation_token
 
 from company.forms import CompanyForm
@@ -30,7 +32,13 @@ from django.core.mail import EmailMessage
 
 @login_required
 def dashboard(request):
-    return render(request, 'accounts/index.html')
+    person = Person.objects.all()
+    company = Company.objects.all()
+    context = {
+        'person': person,
+        'company': company,
+    }
+    return render(request, 'accounts/index.html', context)
 
 
 def login_view(request):
@@ -221,12 +229,13 @@ def forgot_password(request):
             print('send email successfully')
             # END Reset Password
 
-            messages.success(request, 'ایمیل بازنشانی گذرواژه به آدرس ایمیل شما ارسال شد!')
-            return redirect('accounts:login')
-
+            # messages.success(request, 'ایمیل بازنشانی گذرواژه به آدرس ایمیل شما ارسال شد!')
+            # return redirect('accounts:login')
+            return render(request, 'accounts/pages/forgot-password.html', {'res': 'ایمیل بازنشانی گذرواژه به آدرس '
+                                                                                  'ایمیل شما ارسال شد.'})
         else:
             # messages.error(request, 'حساب کاربری وجود ندارد!')
-            return render(request, 'accounts/pages/forgot-password.html', {'res': 'حساب کاربری با ایمیل وارد شده وجود '
+            return render(request, 'accounts/pages/forgot-password.html', {'error': 'حساب کاربری با ایمیل وارد شده وجود'
                                                                                   'ندارد!'})
 
     return render(request, 'accounts/pages/forgot-password.html')
