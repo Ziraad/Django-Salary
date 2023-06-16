@@ -15,7 +15,7 @@ urlpatterns = [
     # path('orders/', views.orders, name='orders'),
     # path('password/', views.change_pass, name='change_pass'),
     path('forgotPassword/', views.forgot_password, name='forgot_password'),
-    # path('resetpassword_validate/<uidb64>/<token>/', views.reset_password_validate, name='reset_password_validate'),
-    # path('resetPassword/', views.reset_password, name='reset_password'),
+    path('resetpassword_validate/<uidb64>/<token>/', views.reset_password_validate, name='reset_password_validate'),
+    path('resetPassword/', views.reset_password, name='reset_password'),
     path('companies/', include('company.urls')),
 ]

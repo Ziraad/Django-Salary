@@ -197,16 +197,17 @@ def account_activate(request, uidb64, token):
 
 
 def forgot_password(request):
+    res = None
     if request.method == 'POST':
         email = request.POST['email']
         print('email: ', email)
-        if User.objects.filter(email=email).exists():
-            user = User.objects.get(email=email)
+        if UserBase.objects.filter(email=email).exists():
+            user = UserBase.objects.get(email=email)
 
             # Reset Password
             current_site = get_current_site(request)
             mail_subject = 'بازنشانی گذرواژه'
-            message = render_to_string('accounts/reset_password_email.html', {
+            message = render_to_string('accounts/pages/reset_password_email.html', {
                 'user': user,
                 'domain': current_site,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -224,45 +225,48 @@ def forgot_password(request):
             return redirect('accounts:login')
 
         else:
-            messages.error(request, 'حساب کاربری وجود ندارد!')
-            return redirect('accounts:forgot_password')
+            # messages.error(request, 'حساب کاربری وجود ندارد!')
+            return render(request, 'accounts/pages/forgot-password.html', {'res': 'حساب کاربری با ایمیل وارد شده وجود '
+                                                                                  'ندارد!'})
 
     return render(request, 'accounts/pages/forgot-password.html')
 
-# def reset_password_validate(request, uidb64, token):
-#     try:
-#         uid = urlsafe_base64_decode(uidb64).decode()
-#         user = User._default_manager.get(pk=uid)
-#         print('user: ', user)
-#     except(TypeError, ValueError, OverflowError, Profile.DoesNotExist):
-#         user = None
-#         print('user empty')
 
-#     if user is not None and default_token_generator.check_token(user, token):
-#         print('is user')
-#         request.session['uid'] = uid
-#         messages.success(request, 'لطفاً گذرواژه خود را بازنشانی کنید!')
-#         return redirect('accounts:reset_password')
-#     else:
-#         print('user noting')
-#         messages.error(request, 'این لینک منقضی شده است!')
-#         return redirect('accounts:login')
+def reset_password_validate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = UserBase.objects.get(pk=uid)
+        print('user: ', user)
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+        user = None
+        print('user empty')
+
+    if user is not None and default_token_generator.check_token(user, token):
+        print('is user')
+        request.session['uid'] = uid
+        messages.success(request, 'لطفاً گذرواژه خود را بازنشانی کنید!')
+        return redirect('accounts:reset_password')
+    else:
+        print('user noting')
+        messages.error(request, 'این لینک منقضی شده است!')
+        return redirect('accounts:login')
 
 
-# def reset_password(request):
-#     if request.method == 'POST':
-#         password = request.POST['password']
-#         confirm_password = request.POST['confirm_password']
+def reset_password(request):
+    res= None
+    if request.method == 'POST':
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
 
-#         if password == confirm_password:
-#             uid = request.session.get('uid')
-#             user = User.objects.get(pk=uid)
-#             user.set_password(password)
-#             user.save()
-#             messages.success(request, 'بازنشانی پسورد با موفقیت انجام شد!')
-#             return redirect('accounts:login')
-#         else:
-#             messages.error(request, 'گذرواژه همخوانی ندارد!')
-#             return redirect('accounts:reset_password')
-#     else:
-#         return render(request, 'accounts/resetPassword.html')
+        if password == confirm_password:
+            uid = request.session.get('uid')
+            user = User.objects.get(pk=uid)
+            user.set_password(password)
+            user.save()
+            messages.success(request, 'بازنشانی پسورد با موفقیت انجام شد!')
+            return redirect('accounts:login')
+        else:
+            # messages.error(request, 'گذرواژه همخوانی ندارد!')
+            return render(request, 'accounts/pages/resetPassword.html', {'res': 'گذرواژه همخوانی ندارد!'})
+    else:
+        return render(request, 'accounts/pages/resetPassword.html')
