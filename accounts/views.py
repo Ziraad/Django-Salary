@@ -85,6 +85,8 @@ def register_user(request):
             user.set_password(registerForm.cleaned_data['password'])
             user.is_active = False
             user.save()
+            print('user saved')
+            # setup email
             current_site = get_current_site(request)
             subject = 'Activate your Account'
             message = render_to_string('accounts/pages/account_activation_email.html', {
@@ -101,33 +103,6 @@ def register_user(request):
         print('get method')
         registerForm = RegistrationForm()
     return render(request, 'accounts/pages/create-account.html', {'form': registerForm})
-    # if request.method == 'POST' and request.is_ajax():
-    #     register_form = RegisterForm(data=request.POST)
-    #     email = request.POST.get('email')
-    #     username = request.POST.get('username')
-    #     username = username.lower()
-    #     password = request.POST.get('password')
-    #     if register_form.is_valid():
-    #         try:
-    #             assert email not in emails, 'این ایمیل از قبل وجود داشته است!'
-    #             assert username not in usernames, 'این نام کاربری از قبل وجود داشته است!'
-    #             user = User.objects.create_user(username=username, password=password, email=email)
-    #             user.is_staff = True
-    #             user.save()
-    #             Profile.objects.create(user=user)
-    #             res = 'حساب شما با موفقیت ایجاد شد'
-    #         except Exception as e:
-    #             res = str(e)
-    #         return JsonResponse({'data': res}, safe=False)
-    # else:
-    #     register_form = RegisterForm()
-    # context = {
-    #     'register_form': register_form,
-    #     'message': res,
-    #     'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY,
-    # }
-
-    # return render(request, 'accounts/pages/create-account.html')
 
 
 # @login_required
@@ -216,7 +191,7 @@ def account_activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return redirect('account:dashboard')
+        return redirect('accounts:dashboard')
     else:
         return render(request, 'accounts/pages/activation_invalid.html')
 

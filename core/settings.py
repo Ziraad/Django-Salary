@@ -130,5 +130,12 @@ AUTH_USER_MODEL = 'accounts.UserBase'
 # LOGIN_REDIRECT_URL = '/account/dashboard'
 # LOGIN_URL = '/account/login/'
 
-# Email setting
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# # Email setting
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# SMTP CONFIGRATION
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mustafa.moosavian@gmail.com'
+EMAIL_HOST_PASSWORD = 'ssemycgawtjfxjtx'
+EMAIL_USE_TLS = True

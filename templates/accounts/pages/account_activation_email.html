@@ -1,7 +1,8 @@
 {% autoescape off %}
-Hi {{ user.user_name }},
+ عزیز {{ user }} سلام
 
-Your account has successfully created. Please click below link to activate your account
-
+حساب کاربری شما با موفقیت ایجاد شده است. برای فعالسازی روی لینک زیر کلیک کنید.
+با تشکر
+    گروه نرم افزاری زیراد
 http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
 {% endautoescape %}
