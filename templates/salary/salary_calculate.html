@@ -149,9 +149,6 @@
                                 <input type="text"
                                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                        id="base_years"
-                                       min="0"
-                                       max="31"
-                                       maxlength="2"
                                        name="base_years"
                                        value="{{ base_years }}"
                                        aria-describedby="emailHelp123">
@@ -385,6 +382,16 @@
                                             <td colspan="2"
                                                 class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
                                                 {{ calculate_salary.right_of_children | intcomma:False }}
+                                            </td>
+                                        </tr>
+
+                                         <tr class="bg-white border-b">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                                                پایه سنوات
+                                            </td>
+                                            <td colspan="2"
+                                                class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center border-r">
+                                                {{ calculate_salary.base_years_wage | intcomma:False }}
                                             </td>
                                         </tr>
 

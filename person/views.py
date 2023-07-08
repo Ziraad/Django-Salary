@@ -278,8 +278,28 @@ def add_wage(request):
 @login_required
 def wage_detail(request, wage_id):
     wage = get_object_or_404(SalaryReceipt, id=wage_id)
+    dic_month = {
+        'Farvardin': 'فروردین',
+        'Ordibehesht': 'اردیبهشت',
+        'Khordad': 'خرداد',
+        'Tir': 'تیر',
+        'Mordad': 'مرداد',
+        'Shahrivar': 'شهریور',
+        'Mehr': 'مهر',
+        'Aban': 'آبان',
+        'Azar': 'آذر',
+        'Dey': 'دی',
+        'Bahman': 'بهمن',
+        'Esfand': 'اسفند',
+    }
+    month_name = ''
+    for key, value in dic_month.items():
+        if wage.month_name == key:
+            month_name = value
+
     context = {
         'wage': wage,
+        'month_name': month_name,
     }
     return render(request, 'salary/wage_detail.html', context)
 

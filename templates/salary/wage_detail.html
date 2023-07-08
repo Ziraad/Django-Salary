@@ -32,7 +32,7 @@
         </head>
     {% endblock %}
 {% endblock %}
-{% block title %}{{ super }} داشبورد {% endblock %}
+{% block title %}{{ super }} نمایش حقوق و دستمزد {% endblock %}
 {% block body %}
     <section class="my-32 text-gray-700 dark:text-gray-200 text-center md:text-right">
         <h2 class="text-3xl font-bold mb-12 text-center">فیش حقوقی شما</h2>
@@ -51,18 +51,20 @@
                         <div class="overflow-hidden">
                             <div class="font-bold text-gray-800 dark:text-gray-400 text-center my-2 p-2">
                                 <div class="mb-4">
-                                    <span>فیش حقوقی</span>
-                                </div>
-                                <div class="mb-4">
                                     <span>{{ wage.person.company }}</span>
                                 </div>
                                 <div class="mb-4">
-                                    <span>{{ wage.month_name }} {{ wage.year }}</span>
+                                    <span>فیش حقوقی</span>
                                 </div>
                                 <div class="mb-4">
-                                            <span>
-                                                {{ wage.person.first_name }} {{ wage.person.last_name }}
-                                            </span>
+
+                                    <span>{{ month_name }} {{ wage.year }}</span>
+
+                                </div>
+                                <div class="mb-4">
+                                    <span>
+                                        {{ wage.person.first_name }} {{ wage.person.last_name }}
+                                    </span>
                                 </div>
                             </div>
                             <table class="min-w-full border dark:border-gray-700 text-center">

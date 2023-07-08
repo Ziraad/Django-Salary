@@ -139,24 +139,26 @@ class SalaryReceipt(models.Model):
             base_info = BaseInfo.objects.filter(year=year)
             print('base info: ', base_info)
             assert base_info.exists(), 'برای سال مورد نظر، حقوق و دستمزد تعریف نشده است'
-            base_info = BaseInfo.objects.get(base_years=base_years)
+            base_info = BaseInfo.objects.get(year=year)
+            base_years_wage = int(float(base_years))
             print('base info is get: ', base_info)
             monthly_wage = int(float(working_days) * float(base_salary))
             overtime_wage = int(float(base_salary) / 7.33 * 1.4 * float(overtime))
             closed_work_wage = int(float(base_salary) * 1.4 * float(closed_work))
             mission_wage = int(float(base_salary) * 1.4 * float(mission))
-            right_of_house = int(base_info.right_to_housing / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
-            right_of_grocery = int(base_info.right_to_grocery / 31 * float(working_days))  # fix bug 29 or 30 or 31 days
+            right_of_house = int(base_info.right_to_housing / number_of_days * float(working_days))
+            right_of_grocery = int(base_info.right_to_grocery / number_of_days * float(working_days))
             right_of_children = int(
-                (base_info.right_to_children/number_of_days) * float(working_days) * float(number_of_children))  # fix
-            # bug 29 or 30 or 31 days
+                (base_info.right_to_children/number_of_days) * float(working_days) * float(number_of_children))
 
-            sub_total_wage = int(monthly_wage) + int(overtime_wage) + int(closed_work_wage) + int(
+            sub_total_wage = int(monthly_wage) + int(base_years_wage) + int(overtime_wage) + int(closed_work_wage) + int(
                 mission_wage) + int(right_of_house) + int(right_of_grocery) + int(right_of_children)
+            print('sub total wage: ', sub_total_wage)
             print('before return in def')
 
             return {
                 'monthly_wage': monthly_wage,
+                'base_years_wage': base_years_wage,
                 'overtime_wage': overtime_wage,
                 'closed_work_wage': closed_work_wage,
                 'mission_wage': mission_wage,
