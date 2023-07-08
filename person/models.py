@@ -29,7 +29,7 @@ class Person(models.Model):
     number_of_children = models.IntegerField('تعداد فرزندان', default=0)
     marital_status = models.CharField(
         'وضعیت تأهل', max_length=20, choices=MARITAL_STATUS)
-    account_number = models.CharField('شماره حساب بانکی', max_length=20, null=True)
+    account_number = models.CharField('شماره حساب بانکی', max_length=20, null=True, blank=True)
     is_active = models.BooleanField('فعال', default=False)
     created = models.DateTimeField('ایجاد شده در', auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

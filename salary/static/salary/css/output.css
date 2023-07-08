@@ -4465,6 +4465,11 @@ textarea.form-control.is-invalid {
   margin-right: auto;
 }
 
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .-mx-6 {
   margin-left: -1.5rem;
   margin-right: -1.5rem;
@@ -4488,11 +4493,6 @@ textarea.form-control.is-invalid {
 .my-24 {
   margin-top: 6rem;
   margin-bottom: 6rem;
-}
-
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 .mx-6 {
@@ -4692,12 +4692,24 @@ textarea.form-control.is-invalid {
   height: 2rem;
 }
 
+.h-96 {
+  height: 24rem;
+}
+
 .h-12 {
   height: 3rem;
 }
 
 .h-32 {
   height: 8rem;
+}
+
+.h-112 {
+  height: 448px;
+}
+
+.h-80 {
+  height: 20rem;
 }
 
 .max-h-0 {
@@ -4752,6 +4764,10 @@ textarea.form-control.is-invalid {
   width: 6rem;
 }
 
+.w-96 {
+  width: 24rem;
+}
+
 .w-12 {
   width: 3rem;
 }
@@ -4766,6 +4782,10 @@ textarea.form-control.is-invalid {
 
 .w-3\.5 {
   width: 0.875rem;
+}
+
+.w-80 {
+  width: 20rem;
 }
 
 .min-w-0 {
@@ -4860,6 +4880,10 @@ textarea.form-control.is-invalid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -4922,6 +4946,14 @@ textarea.form-control.is-invalid {
 
 .gap-12 {
   gap: 3rem;
+}
+
+.gap-0\.5 {
+  gap: 0.125rem;
+}
+
+.gap-0 {
+  gap: 0px;
 }
 
 .gap-8 {
@@ -5072,6 +5104,10 @@ textarea.form-control.is-invalid {
 
 .border-r {
   border-right-width: 1px;
+}
+
+.border-l {
+  border-left-width: 1px;
 }
 
 .border-r-4 {
@@ -5237,6 +5273,11 @@ textarea.form-control.is-invalid {
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-gray-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 
 .bg-green-300 {
@@ -5641,11 +5682,6 @@ textarea.form-control.is-invalid {
   color: rgb(21 128 61 / var(--tw-text-opacity));
 }
 
-.text-orange-700 {
-  --tw-text-opacity: 1;
-  color: rgb(194 65 12 / var(--tw-text-opacity));
-}
-
 .text-red-700 {
   --tw-text-opacity: 1;
   color: rgb(185 28 28 / var(--tw-text-opacity));
@@ -5654,6 +5690,11 @@ textarea.form-control.is-invalid {
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
+.text-orange-700 {
+  --tw-text-opacity: 1;
+  color: rgb(194 65 12 / var(--tw-text-opacity));
 }
 
 .text-red-100 {
@@ -5689,6 +5730,16 @@ textarea.form-control.is-invalid {
 .text-yellow-500 {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity));
+}
+
+.text-green-900 {
+  --tw-text-opacity: 1;
+  color: rgb(20 83 45 / var(--tw-text-opacity));
+}
+
+.text-red-900 {
+  --tw-text-opacity: 1;
+  color: rgb(127 29 29 / var(--tw-text-opacity));
 }
 
 .text-purple-200 {
@@ -6113,6 +6164,11 @@ body {
   color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
+.hover\:text-purple-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(168 85 247 / var(--tw-text-opacity));
+}
+
 .hover\:text-gray-700:hover {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
@@ -6136,16 +6192,6 @@ body {
 .hover\:text-gray-900:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
-}
-
-.hover\:text-purple-200:hover {
-  --tw-text-opacity: 1;
-  color: rgb(233 213 255 / var(--tw-text-opacity));
-}
-
-.hover\:text-purple-500:hover {
-  --tw-text-opacity: 1;
-  color: rgb(168 85 247 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
@@ -6374,14 +6420,19 @@ body {
     background-color: rgb(21 128 61 / var(--tw-bg-opacity));
   }
 
+  .dark\:bg-red-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+  }
+
   .dark\:bg-orange-600 {
     --tw-bg-opacity: 1;
     background-color: rgb(234 88 12 / var(--tw-bg-opacity));
   }
 
-  .dark\:bg-red-700 {
+  .dark\:bg-gray-600 {
     --tw-bg-opacity: 1;
-    background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+    background-color: rgb(75 85 99 / var(--tw-bg-opacity));
   }
 
   .dark\:text-gray-400 {
@@ -6462,6 +6513,11 @@ body {
   .dark\:text-red-500 {
     --tw-text-opacity: 1;
     color: rgb(239 68 68 / var(--tw-text-opacity));
+  }
+
+  .dark\:text-green-500 {
+    --tw-text-opacity: 1;
+    color: rgb(34 197 94 / var(--tw-text-opacity));
   }
 
   .dark\:placeholder-gray-500::-moz-placeholder {
@@ -6732,6 +6788,11 @@ body {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .lg\:text-left {

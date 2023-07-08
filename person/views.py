@@ -278,6 +278,8 @@ def add_wage(request):
 @login_required
 def wage_detail(request, wage_id):
     wage = get_object_or_404(SalaryReceipt, id=wage_id)
+    decree = get_object_or_404(Decree, person__wage_person=wage)
+    print('decree detail: ', decree)
     dic_month = {
         'Farvardin': 'فروردین',
         'Ordibehesht': 'اردیبهشت',
@@ -300,7 +302,9 @@ def wage_detail(request, wage_id):
     context = {
         'wage': wage,
         'month_name': month_name,
+        'decree': decree
     }
+
     return render(request, 'salary/wage_detail.html', context)
 
 

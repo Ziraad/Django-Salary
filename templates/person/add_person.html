@@ -64,7 +64,7 @@
                         <div class="mb-2 text-sm text-gray-500">{{ form.last_name.label }}</div>
                         {{ form.last_name }}
                     </div>
-                     <div>
+                    <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.nation_code.label }}</div>
                         <div>{{ form.nation_code }}</div>
                         {#                        <span class="mt-1 text-xs text-red-500">{{ form.object.errors }}</span>#}
@@ -80,7 +80,7 @@
                         <div class="mb-2 text-sm text-gray-500">{{ form.company.label }}</div>
                         <div>{{ form.company }}</div>
                     </div>
-{#                    <div>#}
+                    {#                    <div>#}
                     {#                        <div class="mb-2 text-sm text-gray-500">{{ form.id_code.label }}</div>#}
                     {#                        <div>{{ form.id_code }}</div>#}
                     {#                    </div>#}
@@ -92,6 +92,10 @@
                         <div class="mb-2 text-sm text-gray-500">{{ form.place_of_birth.label }}</div>
                         <div>{{ form.place_of_birth }}</div>
                     </div>
+                    <div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.father_name.label }}</div>
+                        <div>{{ form.father_name }}</div>
+                    </div>
                 </div>
                 <div class="grid mb-4">
                     <div>
@@ -101,12 +105,12 @@
                 </div>
                 <div class="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.father_name.label }}</div>
-                        <div>{{ form.father_name }}</div>
-                    </div>
-                    <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.education_degree.label }}</div>
                         <div>{{ form.education_degree }}</div>
+                    </div>
+                    <div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.marital_status.label }}</div>
+                        <div>{{ form.marital_status }}</div>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-2 gap-4 mb-4">
@@ -115,10 +119,11 @@
                         <div>{{ form.number_of_children }}</div>
                     </div>
                     <div>
-                        <div class="mb-2 text-sm text-gray-500">{{ form.marital_status.label }}</div>
-                        <div>{{ form.marital_status }}</div>
+                        <div class="mb-2 text-sm text-gray-500">{{ form.account_number.label }}</div>
+                        <div>{{ form.account_number }}</div>
                     </div>
                 </div>
+
                 {#                                {% for field in form %}#}
                 {#                                    <div class="mb-2">#}
                 {#                                        {{ field.errors }}#}

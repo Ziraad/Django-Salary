@@ -20,6 +20,11 @@ module.exports = {
                 // onSecondary: '#F9FAFB',
                 // onDanger: '#ffffff'
             },
+            height: {
+                112: '448px',
+                128: '512px',
+                144: '576px',
+            },
             fontFamily: {
                 iransans: ['iransans'],
                 vazir: ['vazir'],

@@ -44,6 +44,7 @@ class PersonForm(forms.ModelForm):
             'education_degree': _('مدرک تحصیلی'),
             'number_of_children': _('تعداد فرزندان'),
             'marital_status': _('وضعیت تأهل'),
+            'account number': _('شماره حساب بانکی'),
         }
 
         widgets = {
@@ -113,6 +114,12 @@ class PersonForm(forms.ModelForm):
                                 'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
                                 'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'marital_status': forms.Select(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'account_number': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
                                 'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
                                 'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
