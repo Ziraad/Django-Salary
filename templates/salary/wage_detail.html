@@ -171,55 +171,55 @@
                                                     <span class="border-l px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 dark:border-gray-700">
                                                         حقوق ماهیانه
                                                     </span>
-                                                            <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
+                                                    <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
                                                         {{ wage.monthly_wage | intcomma:False }}
                                                     </span>
-                                                        </div>
-                                                        <div class="grid grid-cols-2">
+                                                </div>
+                                                <div class="grid grid-cols-2">
                                                     <span class="border-l px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 dark:border-gray-700">
                                                         مبلغ اضافه کاری
                                                     </span>
-                                                            <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
+                                                    <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
                                                         {{ wage.overtime_wage | intcomma:False }}
                                                     </span>
-                                                        </div>
-                                                        <div class="grid grid-cols-2">
+                                                </div>
+                                                <div class="grid grid-cols-2">
                                                     <span class="border-l px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 dark:border-gray-700">
                                                         حق تعطیل کاری
                                                     </span>
-                                                            <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
+                                                    <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
                                                         {{ wage.closed_work_wage | intcomma:False }}
                                                     </span>
-                                                        </div>
-                                                        <div class="grid grid-cols-2">
+                                                </div>
+                                                <div class="grid grid-cols-2">
                                                     <span class="border-l px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 dark:border-gray-700">
                                                         حق مأموریت
                                                     </span>
-                                                            <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
+                                                    <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
                                                         {{ wage.mission_wage | intcomma:False }}
                                                     </span>
-                                                        </div>
-                                                        <div class="grid grid-cols-2">
+                                                </div>
+                                                <div class="grid grid-cols-2">
                                                     <span class="border-l px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 dark:border-gray-700">
                                                         حق خوار و بار
                                                     </span>
-                                                            <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
+                                                    <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
                                                         {{ wage.right_of_grocery | intcomma:False }}
                                                     </span>
-                                                        </div>
-                                                        <div class="grid grid-cols-2">
+                                                </div>
+                                                <div class="grid grid-cols-2">
                                                     <span class="border-l px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 dark:border-gray-700">
                                                         حق مسکن
                                                     </span>
-                                                            <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
+                                                    <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
                                                         {{ wage.right_of_house | intcomma:False }}
                                                     </span>
-                                                        </div>
-                                                        <div class="grid grid-cols-2">
+                                                </div>
+                                                <div class="grid grid-cols-2">
                                                     <span class="border-l px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-400 dark:border-gray-700">
                                                         حق اولاد
                                                     </span>
-                                                            <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
+                                                    <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
                                                         {{ wage.right_of_children | intcomma:False }}
                                                     </span>
                                                 </div>
@@ -244,7 +244,7 @@
                                                       وام
                                                     </span>
                                                     <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
-                                                        1548900
+                                                        {{ wage.loan_received | intcomma:False }}
                                                     </span>
                                                 </div>
                                                 <div class="grid grid-cols-2">
@@ -252,7 +252,7 @@
                                                       بیمه
                                                     </span>
                                                     <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
-                                                        15554
+                                                        {{ wage.insurance | intcomma:False }}
                                                     </span>
                                                 </div>
                                                 <div class="grid grid-cols-2">
@@ -260,7 +260,7 @@
                                                       مالیات
                                                     </span>
                                                     <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
-                                                        15554
+                                                        {{ wage.tax | intcomma:False }}
                                                     </span>
                                                 </div>
                                                 <div class="grid grid-cols-2">
@@ -268,7 +268,7 @@
                                                       سایر کسورات
                                                     </span>
                                                     <span class="border-l text-sm text-gray-900 dark:text-gray-200 font-light px-4 py-2 whitespace-nowrap dark:border-gray-700">
-                                                        0
+                                                        {{ wage.other_deductions | intcomma:False }}
                                                     </span>
                                                 </div>
                                             </div>
@@ -277,7 +277,7 @@
                                                     جمع کسورات
                                                 </span>
                                                 <span class="border-l text-sm text-red-900 dark:text-red-500 font-bold px-4 py-2 whitespace-nowrap dark:border-gray-700">
-                                                    25000000
+                                                    {{ wage.sub_total_deductions | intcomma:False }}
                                                 </span>
                                             </div>
                                         </div>
@@ -288,6 +288,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     <script>
         const button = document.getElementById("pdfButton");

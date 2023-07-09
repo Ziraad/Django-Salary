@@ -36,6 +36,20 @@ class BaseInfo(models.Model):
     updated = models.DateTimeField('به روز رسانی در', auto_now=True)
 
 
+class TaxTable(models.Model):
+    class Meta:
+        verbose_name = 'جدول مالیات'
+        verbose_name_plural = 'جدول مالیات'
+
+    base_info = models.ForeignKey(BaseInfo, on_delete=models.CASCADE, verbose_name='اطلاعات پایه')
+    from_wage = models.IntegerField('از درآمد', default=0)
+    to_wage = models.IntegerField('تا درآمد', default=0)
+    tax_percent = models.IntegerField('درصد مالیات', default=0)
+
+    def __str__(self):
+        return '{} - {} - {} - {}'.format(self.base_info, self.from_wage, self.to_wage, self.tax_percent)
+
+
 class Decree(models.Model):
     class Meta:
         ordering = ('-created',)
@@ -155,9 +169,10 @@ class SalaryReceipt(models.Model):
             right_of_house = int(base_info.right_to_housing / number_of_days * float(working_days))
             right_of_grocery = int(base_info.right_to_grocery / number_of_days * float(working_days))
             right_of_children = int(
-                (base_info.right_to_children/number_of_days) * float(working_days) * float(number_of_children))
+                (base_info.right_to_children / number_of_days) * float(working_days) * float(number_of_children))
 
-            sub_total_wage = int(monthly_wage) + int(base_years_wage) + int(overtime_wage) + int(closed_work_wage) + int(
+            sub_total_wage = int(monthly_wage) + int(base_years_wage) + int(overtime_wage) + int(
+                closed_work_wage) + int(
                 mission_wage) + int(right_of_house) + int(right_of_grocery) + int(right_of_children)
             print('sub total wage: ', sub_total_wage)
             print('before return in def')
@@ -218,26 +233,28 @@ class SalaryReceipt(models.Model):
 
             self.sub_total_wage = int(self.monthly_wage) + int(self.overtime_wage) + int(self.closed_work_wage) + int(
                 self.mission_wage) + int(self.right_of_house) + int(self.right_of_grocery) + int(self.right_of_children)
+            self.calculate_insurance()
+            self.calculate_tax()
             self.save()
         except Exception as e:
             raise Exception(e)
 
     def calculate_monthly_wage(self):
-        decree = Decree.objects.get(person=self.person)
+        decree = Decree.objects.get(person=self.person, year=self.year)
         daily_wage = decree.base_salary
         monthly_wage = self.working_days * daily_wage
 
         return monthly_wage
 
     def calculate_overtime_wage(self):
-        decree = Decree.objects.get(person=self.person)
+        decree = Decree.objects.get(person=self.person, year=self.year)
         daily_wage = decree.base_salary
         overtime_wage = daily_wage / 7.33 * 1.4 * self.overtime
 
         return overtime_wage
 
     def calculate_closed_work_wage(self):
-        decree = Decree.objects.get(person=self.person)
+        decree = Decree.objects.get(person=self.person, year=self.year)
         daily_wage = decree.base_salary
         closed_work = daily_wage * 1.4 * self.closed_work
 
@@ -246,14 +263,29 @@ class SalaryReceipt(models.Model):
     def sub_salary_and_benefits(self):
         pass
 
-    def sub_salary_and_benefits_covered_by_insurance(self):
-        pass
+    def sub_total_wage_covered_by_insurance(self):
+        list_items_included_in_insurance = [self.monthly_wage, self.overtime_wage, self.closed_work_wage,
+                                            self.right_of_house]
+        return sum(list_items_included_in_insurance)
+
+    def sub_total_wage_covered_by_tax(self):
+        list_items_included_in_tax = [self.monthly_wage, self.overtime_wage, self.closed_work_wage,
+                                      self.right_of_house, self.right_of_children, self.right_of_grocery]
+        return sum(list_items_included_in_tax)
 
     def calculate_insurance(self):
-        return (self.sub_salary_and_benefits_covered_by_insurance * 7) / 100
+        sub_total_wage_covered_by_insurance = int(self.sub_total_wage_covered_by_insurance())
+        insurance = (sub_total_wage_covered_by_insurance * 7) / 100
+        self.insurance = insurance
+        self.sub_total_deductions += insurance
+        self.save()
 
     def calculate_tax(self):
-        pass
+        sub_total_wage_covered_by_tax = int(self.sub_total_wage_covered_by_tax())
+        tax = (sub_total_wage_covered_by_tax * 10) / 100
+        self.tax = tax
+        self.sub_total_deductions += tax
+        self.save()
 
     def collect_deductions(self):
         pass

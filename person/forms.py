@@ -317,7 +317,8 @@ class SalaryReceiptForm(forms.ModelForm):
         model = SalaryReceipt
         # fields = "__all__"
         exclude = ['created_by', 'monthly_wage', 'overtime_wage', 'closed_work_wage', 'mission_wage', 'right_of_house',
-                   'right_of_grocery', 'right_of_children', 'sub_total_wage']
+                   'right_of_grocery', 'right_of_children', 'sub_total_wage', 'insurance', 'tax', 'loan_received',
+                   'other_deductions', 'sub_total_deductions']
         labels = {
             'person': _('نام پرسنل'),
             'month_name': _('ماه'),

@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import Decree, SalaryReceipt, TypeOfEmployment, BaseInfo
+from .models import Decree, SalaryReceipt, TypeOfEmployment, BaseInfo, TaxTable
+
+
+class TaxTableInline(admin.TabularInline):
+    model = TaxTable
+    extra = 1
 
 
 @admin.register(BaseInfo)
@@ -9,6 +14,7 @@ class BaseInfoAdmin(admin.ModelAdmin):
                     'created')
     list_editable = ['base_salary', 'base_years', 'right_to_housing', 'right_to_grocery', 'right_to_children']
     ordering = ('-created',)
+    inlines = [TaxTableInline]
 
 
 @admin.register(TypeOfEmployment)

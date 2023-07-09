@@ -206,16 +206,20 @@ def add_wage(request):
             assert not is_wage.exists(), 'برای این کاربر در سال و ماه مورد نظر قبلاً فیش حقوقی صادر شده است!'
             # assert details.is_valid(), 'در ثبت فرم خطایی رخ داد!'
 
-            if details.is_valid():
+            try:
+                assert details.is_valid, 'فرم دارای اشکال است'
                 print('form is valid')
                 new_wage = details.save(commit=False)
+                print('detail saved false commit')
                 new_wage.created_by = request.user
+                print('after created by')
                 new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
                 new_wage.save()
                 # wage = SalaryReceipt()
                 return redirect('person:wages')
-            else:
+            except Exception as e:
                 print('در ثبت فرم اشکالی بوجود آمد!')
+                return render(request, 'person/add_wage.html', {'form': details, 'error': str(e)})
 
                 # raise Exception('form is nottt valid')
                 # return render(request, 'person/add_wage.html', {'form': details, 'error': 'در ثبت فرم خطایی رخ داد!'})
