@@ -114,14 +114,20 @@ class SalaryReceipt(models.Model):
     created = models.DateTimeField('ایجاد شده در', auto_now_add=True)
     updated = models.DateTimeField('به روز رسانی در', auto_now=True)
 
-    monthly_wage = models.IntegerField('', default=0)
-    overtime_wage = models.IntegerField('', default=0)
-    closed_work_wage = models.IntegerField('', default=0)
-    mission_wage = models.IntegerField('', default=0)
-    right_of_house = models.IntegerField('', default=0)
-    right_of_grocery = models.IntegerField('', default=0)
-    right_of_children = models.IntegerField('', default=0)
-    sub_total_wage = models.IntegerField('', default=0)
+    monthly_wage = models.IntegerField('حقوق ماهیانه', default=0)
+    overtime_wage = models.IntegerField('اضافه کاری', default=0)
+    closed_work_wage = models.IntegerField('مبلغ تعطیل کاری', default=0)
+    mission_wage = models.IntegerField('مأموریت', default=0)
+    right_of_house = models.IntegerField('حق مسکن', default=0)
+    right_of_grocery = models.IntegerField('حق خوار و بار', default=0)
+    right_of_children = models.IntegerField('حق اولاد', default=0)
+    sub_total_wage = models.IntegerField('جمع حقوق و مزایا', default=0)
+
+    insurance = models.IntegerField('حق بیمه', default=0)
+    tax = models.IntegerField('مالیات', default=0)
+    loan_received = models.IntegerField('وام دریافتی', default=0)
+    other_deductions = models.IntegerField('سایر کسورات', default=0)
+    sub_total_deductions = models.IntegerField('جمع کسورات', default=0)
 
     def __unicode__(self):
         return self.id

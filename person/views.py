@@ -138,36 +138,6 @@ def add_decree(request):
         return render(request, 'person/add_decree.html', {'form': form})
 
 
-# def add_person_decree(request, personal_code):
-#     if request.method == 'POST':
-#         details = DecreeForm(request.POST, request=request, slug=personal_code)
-#         person = request.POST['person']
-#         year = request.POST['year']
-#
-#         is_decree = Decree.objects.filter(person=person, year__exact=year)
-#         # get_person = Person.objects.get(__)
-#         # is_warrant = Warrant.objects.filter(Q(person=person) | Q(year__exact=year))
-#         print('decree: ', is_decree)
-#         try:
-#             get_person = Person.objects.get(personnel_code=personal_code)
-#             print('person: ', person)
-#             assert get_person.is_active == True, 'برای صدور حکم، باید وضعیت کاربر تایید شده باشد!'
-#             assert not is_decree.exists(), 'برای این کاربر در سال مورد نظر قبلاً حکم صادر شده است!'
-#             assert represents_int(request.POST['base_salary']), 'فرمت حقوق پایه باید یک عدد صحیح باشد!'
-#             if details.is_valid():
-#                 print('form is valid')
-#                 new_decree = details.save(commit=False)
-#                 new_decree.created_by = request.user
-#                 new_decree.save()
-#                 return redirect('person:decrees')
-#         except Exception as e:
-#             print('form is not valid')
-#             return render(request, 'person/add_decree.html', {'form': details, 'error': str(e)})
-#     else:
-#         form = DecreeForm(request=request, slug=personal_code)
-#         return render(request, 'person/add_decree.html', {'form': form})
-
-
 @login_required
 def wages(request):
     all_wage = SalaryReceipt.objects.filter(created_by=request.user)
