@@ -27,6 +27,8 @@
     <orderEntry type="library" name="html2pdf.js" level="application" />
     <orderEntry type="library" name="Chart.js" level="application" />
     <orderEntry type="library" name="jquery-2.1.3" level="application" />
+    <orderEntry type="library" name="alpine" level="application" />
+    <orderEntry type="library" name="Chart.js" level="application" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

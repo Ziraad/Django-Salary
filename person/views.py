@@ -210,9 +210,7 @@ def add_wage(request):
                 assert details.is_valid, 'فرم دارای اشکال است'
                 print('form is valid')
                 new_wage = details.save(commit=False)
-                print('detail saved false commit')
                 new_wage.created_by = request.user
-                print('after created by')
                 new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
                 new_wage.save()
                 # wage = SalaryReceipt()
@@ -220,15 +218,6 @@ def add_wage(request):
             except Exception as e:
                 print('در ثبت فرم اشکالی بوجود آمد!')
                 return render(request, 'person/add_wage.html', {'form': details, 'error': str(e)})
-
-                # raise Exception('form is nottt valid')
-                # return render(request, 'person/add_wage.html', {'form': details, 'error': 'در ثبت فرم خطایی رخ داد!'})
-            # new_wage = details.save(commit=False)
-            # new_wage.created_by = request.user
-            # new_wage.save()
-            # # wage = SalaryReceipt()
-            # # new_wage.calculate_salary(month_name, year, working_days, overtime, closed_work, mission)
-            # return redirect('person:wages')
 
         except Exception as e:
             print('form is not valid')
@@ -250,9 +239,9 @@ def add_wage(request):
 
 
 @login_required
-def wage_detail(request, wage_id):
+def wage_detail(request, wage_id, wage_year):
     wage = get_object_or_404(SalaryReceipt, id=wage_id)
-    decree = get_object_or_404(Decree, person__wage_person=wage)
+    decree = get_object_or_404(Decree, person__wage_person=wage, year=wage_year)
     print('decree detail: ', decree)
     dic_month = {
         'Farvardin': 'فروردین',

@@ -21,7 +21,7 @@ class Company(models.Model):
     address = models.CharField('آدرس', max_length=150, null=True, blank=True)
     logo = models.ImageField('لوگو', upload_to='images/logos/', default='images/logo.jpg')
     description = models.TextField('توضیحات', null=True, blank=True)
-    start_of_activity = models.CharField('تاریخ شروع فعالت', max_length=10)
+    start_of_activity = models.DateField('تاریخ شروع فعالت')
     is_active = models.BooleanField('فعال', default=False)
     created = models.DateTimeField('ایجاد شده در', auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

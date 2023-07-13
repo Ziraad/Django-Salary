@@ -41,7 +41,7 @@ class TaxTable(models.Model):
         verbose_name = 'جدول مالیات'
         verbose_name_plural = 'جدول مالیات'
 
-    base_info = models.ForeignKey(BaseInfo, on_delete=models.CASCADE, verbose_name='اطلاعات پایه')
+    base_info = models.ForeignKey(BaseInfo, on_delete=models.CASCADE, related_name='tax_table', verbose_name='اطلاعات پایه')
     from_wage = models.IntegerField('از درآمد', default=0)
     to_wage = models.IntegerField('تا درآمد', default=0)
     tax_percent = models.IntegerField('درصد مالیات', default=0)
@@ -233,9 +233,15 @@ class SalaryReceipt(models.Model):
 
             self.sub_total_wage = int(self.monthly_wage) + int(self.overtime_wage) + int(self.closed_work_wage) + int(
                 self.mission_wage) + int(self.right_of_house) + int(self.right_of_grocery) + int(self.right_of_children)
+
+            base_info = BaseInfo.objects.filter(year=year)
+            assert base_info.exists(), 'برای سال مورد نظر جدول حقوق و دستمزد یافت نشد. لطفاً با پشتیبانی تماس بگیرید.'
+            base_info = get_object_or_404(BaseInfo, year=year)
             self.calculate_insurance()
-            self.calculate_tax()
+            self.calculate_tax(base_info)
+
             self.save()
+
         except Exception as e:
             raise Exception(e)
 
@@ -280,12 +286,28 @@ class SalaryReceipt(models.Model):
         self.sub_total_deductions += insurance
         self.save()
 
-    def calculate_tax(self):
-        sub_total_wage_covered_by_tax = int(self.sub_total_wage_covered_by_tax())
-        tax = (sub_total_wage_covered_by_tax * 10) / 100
-        self.tax = tax
-        self.sub_total_deductions += tax
-        self.save()
+    # work over on this function 
+    def calculate_tax(self, base_info):
+        print('base_info: ', base_info)
+        try:
+            tax_list = base_info.tax_table.all()
+            sub_total_wage_covered_by_tax = int(self.sub_total_wage_covered_by_tax())
+            tax = 0
+            for i in tax_list:
+                from_wage = i.from_wage
+                to_wage = i.to_wage
+                tax_percent = i.tax_percent
+                print('tax table: ', i)
+                if sub_total_wage_covered_by_tax >= from_wage <= to_wage:
+                    tax += (sub_total_wage_covered_by_tax * tax_percent) / 100
+                    print('tax in loop: ', tax)
+
+            self.tax = tax
+            print('tax org: ', tax)
+            self.sub_total_deductions += tax
+            self.save()
+        except Exception as e:
+            raise Exception(e)
 
     def collect_deductions(self):
         pass

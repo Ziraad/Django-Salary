@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from company.forms import CompanyForm
 from company.models import Company
 
+from jalali_date import datetime2jalali, date2jalali
+
 
 def company(request):
     companies = Company.objects.filter(accountant=request.user)
@@ -43,13 +45,21 @@ def add_company(request):
                 try:
                     new_company = details.save(commit=False)
                     name = request.POST.get('name')
+                    print('name: ', name)
+                    date = request.POST.get('start_of_activity')
+                    print('date: ', date)
+                    print('type of date: ', type(date))
+                    jalali_start_of_activity = datetime2jalali(request.POST.get('start_of_activity')).strftime(
+                        '%y/%m/%d _ %H:%M:%S')
+                    print('jalali_start_of_activity', jalali_start_of_activity)
+                    new_company.start_of_activity = jalali_start_of_activity
                     slug_ = "-".join(name.split())
                     new_company.slug = slug_
                     new_company.accountant = request.user
                     new_company.save()
                     return redirect('accounts:companies:company')
                 except Exception as e:
-                    print('error: ', str(e))
+                    return render(request, 'company/new_company.html', {'form': details, 'error': str(e)})
             else:
                 print('form is not valid')
                 return render(request, 'company/new_company.html', {'form': details, 'error': 'فرم نامعتبر است!'})

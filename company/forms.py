@@ -3,6 +3,10 @@ from django.utils.translation import gettext_lazy as _
 
 from company.models import Company
 
+from django import forms
+from jalali_date.fields import JalaliDateField, SplitJalaliDateTimeField
+from jalali_date.widgets import AdminJalaliDateWidget, AdminSplitJalaliDateTime
+
 COMPANY_TYPE = (
     ('Private', 'خصوصی'),
     ('Government', 'دولتی'),
@@ -13,6 +17,28 @@ class CompanyForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         # first call parent's constructor
         super(CompanyForm, self).__init__(*args, **kwargs)
+
+        self.fields['start_of_activity'] = JalaliDateField(label=_('تاریخ شروع فعالیت'),  # date format is  "yyyy-mm-dd"
+                                                           widget=AdminJalaliDateWidget
+                                                           # optional, to use default datepicker
+                                                           )
+
+        # you can added a "class" to this field for use your datepicker!
+        self.fields['start_of_activity'].widget.attrs.update(
+            {'class': 'jalali_date-date block w-full px-3 py-1.5 text-base '
+                      'font-normal text-gray-700 '
+                      'bg-white bg-clip-padding border border-solid '
+                      'border-gray-300 '
+                      'rounded transition ease-in-out m-0 '
+                      'focus:text-gray-700 focus:text-base '
+                      'focus:bg-white focus:border-blue-600 '
+                      'focus:outline-none'})
+
+        self.fields['date_time'] = SplitJalaliDateTimeField(label=_('date time'),
+                                                            widget=AdminSplitJalaliDateTime
+                                                            # required, for decompress DatetimeField to
+                                                            # JalaliDateField and JalaliTimeField
+                                                            )
         # there's a `fields` property now
         self.fields['name'].required = False
         self.fields['company_type'].required = False
@@ -59,15 +85,7 @@ class CompanyForm(forms.ModelForm):
                                 'bg-white bg-clip-padding border border-solid border-gray-300 '
                                 'rounded transition ease-in-out m-0 focus:text-gray-700 '
                                 'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'start_of_activity': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal '
-                                                                 'text-gray-700 '
-                                                                 'bg-white bg-clip-padding border border-solid '
-                                                                 'border-gray-300 '
-                                                                 'rounded transition ease-in-out m-0 '
-                                                                 'focus:text-gray-700 focus:text-base '
-                                                                 'focus:bg-white focus:border-blue-600 '
-                                                                 'focus:outline-none',
-                                                        'placeholder': '1401/01/01'}),
+
             'address': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
                                                        'bg-white bg-clip-padding border border-solid border-gray-300 '
                                                        'rounded transition ease-in-out m-0 focus:text-gray-700 '
@@ -108,8 +126,8 @@ class CompanyForm(forms.ModelForm):
             self._errors['object'] = self.error_class([
                 'موضوع فعالیت شرکت باید کمتر از 200 کاراکتر باشد!'])
 
-        if len(start_of_activity) <= 0:
-            self._errors['start_of_activity'] = self.error_class([
-                'تاریخ شروع فعالیت را وارد کنید!'])
+        # if len(start_of_activity) <= 0:
+        #     self._errors['start_of_activity'] = self.error_class([
+        #         'تاریخ شروع فعالیت را وارد کنید!'])
 
         return self.cleaned_data
