@@ -158,6 +158,18 @@
                 </div>
             </div>
         </div>
+        {% if error %}
+            <div class="bg-red-100 text-red-700 dark:bg-gray-700 dark:text-red-500 dark:border dark:border-red-600 rounded-lg py-5 px-6 mb-3 text-base inline-flex items-center w-full"
+                 role="alert">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times-circle"
+                     class="w-4 h-4 ml-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 512 512">
+                    <path fill="currentColor"
+                          d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"></path>
+                </svg>
+                {{ error }}
+            </div>
+        {% endif %}
 
         {% if persons %}
             <!-- New Table -->
@@ -169,6 +181,7 @@
                                 class="text-xs font-semibold tracking-wide text-right text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                         >
                             <th class="px-4 py-3">نام پرسنل</th>
+                            <th class="px-4 py-3">کد پرسنلی</th>
                             <th class="px-4 py-3">شرکت</th>
                             <th class="px-4 py-3">وضعیت</th>
                             <th class="px-4 py-3">تاریخ ثبت</th>
@@ -208,6 +221,9 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
+                                    {{ person.personnel_code }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
                                     {{ person.company.name }}
                                 </td>
                                 <td class="px-4 py-3 text-xs">
@@ -232,7 +248,8 @@
                                 <td class="px-4 py-3 text-xs">
                                     <div class="flex-model gap-2">
                                         <a href="{{ person.get_absolute_url }}" class="hover:text-blue-700"
-                                           data-bs-toggle="tooltip" data-bs-placement="top" title="مشاهده اطلاعات پرسنل">
+                                           data-bs-toggle="tooltip" data-bs-placement="top"
+                                           title="مشاهده اطلاعات پرسنل">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                  stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -242,7 +259,8 @@
                                             </svg>
                                         </a>
                                         <a href="#" class="hover:text-blue-700"
-                                           data-bs-toggle="tooltip" data-bs-placement="top" title="ویرایش اطلاعات پرسنل">
+                                           data-bs-toggle="tooltip" data-bs-placement="top"
+                                           title="ویرایش اطلاعات پرسنل">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                  stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round"

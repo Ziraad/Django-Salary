@@ -48,11 +48,9 @@ def add_company(request):
                     print('name: ', name)
                     date = request.POST.get('start_of_activity')
                     print('date: ', date)
-                    print('type of date: ', type(date))
-                    jalali_start_of_activity = datetime2jalali(request.POST.get('start_of_activity')).strftime(
-                        '%y/%m/%d _ %H:%M:%S')
-                    print('jalali_start_of_activity', jalali_start_of_activity)
-                    new_company.start_of_activity = jalali_start_of_activity
+                    print('type of date::: ', type(date))
+
+                    new_company.start_of_activity = date
                     slug_ = "-".join(name.split())
                     new_company.slug = slug_
                     new_company.accountant = request.user

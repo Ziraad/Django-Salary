@@ -4,6 +4,7 @@ import time
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from django_jalali.db import models as jmodels
 
 
 class Company(models.Model):

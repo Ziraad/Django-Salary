@@ -1,5 +1,6 @@
 {% extends 'accounts/base.html' %}
 {% load static %}
+{% load jalali_tags %}
 <!DOCTYPE html>
 {% block head %}
     {% block extra_headers %}
@@ -54,6 +55,7 @@
                         {{ error }}
                     </div>
                 {% endif %}
+                {{ form.media }}
                 <div class="grid md:grid-cols-4 gap-4 mb-4">
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.first_name.label }}</div>

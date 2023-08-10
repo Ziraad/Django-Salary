@@ -105,7 +105,6 @@ import locale
 
 locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 

@@ -22,6 +22,11 @@ class CompanyForm(forms.ModelForm):
                                                            widget=AdminJalaliDateWidget
                                                            # optional, to use default datepicker
                                                            )
+        # self.fields['start_of_activity'] = SplitJalaliDateTimeField(label=_('تاریخ شروع فعالیت'),
+        #                                                             widget=AdminSplitJalaliDateTime
+        #                                                             # required, for decompress DatetimeField to
+        #                                                             # JalaliDateField and JalaliTimeField
+        #                                                             )
 
         # you can added a "class" to this field for use your datepicker!
         self.fields['start_of_activity'].widget.attrs.update(
@@ -34,11 +39,11 @@ class CompanyForm(forms.ModelForm):
                       'focus:bg-white focus:border-blue-600 '
                       'focus:outline-none'})
 
-        self.fields['date_time'] = SplitJalaliDateTimeField(label=_('date time'),
-                                                            widget=AdminSplitJalaliDateTime
-                                                            # required, for decompress DatetimeField to
-                                                            # JalaliDateField and JalaliTimeField
-                                                            )
+        # self.fields['date_time'] = SplitJalaliDateTimeField(label=_('date time'),
+        #                                                     widget=AdminSplitJalaliDateTime
+        #                                                     # required, for decompress DatetimeField to
+        #                                                     # JalaliDateField and JalaliTimeField
+        #                                                     )
         # there's a `fields` property now
         self.fields['name'].required = False
         self.fields['company_type'].required = False

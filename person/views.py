@@ -18,42 +18,56 @@ def persons(request):
     }
 
     if request.method == 'POST':
-        if 'activate' in request.POST:
-            print('activate')
-            personnel_code = request.POST['activate']
-            get_person = get_object_or_404(Person, personnel_code=personnel_code)
-            get_person.is_active = True
-            get_person.save()
-        if 'deactivate' in request.POST:
-            print('deactivate')
-            personnel_code = request.POST['deactivate']
-            get_person = get_object_or_404(Person, personnel_code=personnel_code)
-            get_person.is_active = False
-            get_person.save()
-        if 'delete' in request.POST:
-            print('delete')
-            personnel_code = request.POST['delete']
-            get_person = get_object_or_404(Person, personnel_code=personnel_code)
-            get_person.delete()
+        try:
+            person = Person.objects.filter(company__accountant=request.user)
+            if 'activate' in request.POST:
+                print('activate')
+                personnel_code = request.POST['activate']
+                get_person = get_object_or_404(person, personnel_code=personnel_code)
+                get_person.is_active = True
+                get_person.save()
+            if 'deactivate' in request.POST:
+                print('deactivate')
+                personnel_code = request.POST['deactivate']
+                get_person = get_object_or_404(person, personnel_code=personnel_code)
+                get_person.is_active = False
+                get_person.save()
+            if 'delete' in request.POST:
+                print('delete')
+                personnel_code = request.POST['delete']
+                # nation_code = request.POST['nation_code']
+                get_person = get_object_or_404(person, personnel_code=personnel_code)
+                get_person.delete()
 
-        return redirect('person:persons')
+            return redirect('person:persons')
+        except Exception as e:
+            context['error'] = str(e)
+            return render(request, 'person/persons.html', context)
     return render(request, 'person/persons.html', context)
 
 
 @login_required
 def add_person(request):
+    persons = Person.objects.filter(company__accountant=request.user)
+    print('persons: ', persons)
     if request.method == 'POST':
         details = PersonForm(request.POST, request.FILES, request=request)
+        person = persons.filter(personnel_code=request.POST.get('personnel_code'))
+        print('person: ', person)
 
         if details.is_valid():
             try:
+                if person.exists():
+                    raise Exception('کد پرسنلی تکراری است!')
                 print('form is valid')
                 new_person = details.save(commit=False)
                 company_id = request.POST['company']
                 print('company name get by form: ', company_id)
                 company = Company.objects.get(id=company_id, accountant=request.user)
                 print('company: ', company)
-                assert company.is_active == True, 'وضعیت شرکت مورد نظر تایید نشده است. برای تایید به صفحه شرکت ها رفته و گزینه تایید شرکت مورد نظر را بزنید.'
+                assert company.is_active == True, 'وضعیت شرکت مورد نظر تایید نشده است. برای تایید به صفحه شرکت ها ' \
+                                                  'رفته و گزینه تایید شرکت مورد نظر را بزنید.'
+                new_person.date_of_birth = request.POST.get('date_of_birth')
                 new_person.accountant = request.user
                 new_person.save()
                 return redirect('person:persons')

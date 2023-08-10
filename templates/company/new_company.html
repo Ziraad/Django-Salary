@@ -1,5 +1,6 @@
 {% extends 'accounts/base.html' %}
 {% load static %}
+{% load jalali_tags %}
 <!DOCTYPE html>
 {% block head %}
     {% block extra_headers %}
@@ -12,10 +13,6 @@
                     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
                     rel="stylesheet"
             />
-
-            <link rel="stylesheet"
-                  href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
-            <script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
 
             <script
                     src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
@@ -59,6 +56,7 @@
                         {{ error }}
                     </div>
                 {% endif %}
+            {{ form.media }}
                 <div class="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.name.label }}</div>

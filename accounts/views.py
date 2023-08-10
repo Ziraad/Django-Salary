@@ -32,8 +32,8 @@ from django.core.mail import EmailMessage
 
 @login_required
 def dashboard(request):
-    person = Person.objects.all()
-    company = Company.objects.all()
+    person = Person.objects.filter(company__accountant=request.user)
+    company = Company.objects.filter(accountant=request.user)
     context = {
         'person': person,
         'company': company,

@@ -6,6 +6,9 @@ from company.models import Company
 from salary.models import Decree, TypeOfEmployment, SalaryReceipt
 from .models import Person
 
+from jalali_date.fields import JalaliDateField, SplitJalaliDateTimeField
+from jalali_date.widgets import AdminJalaliDateWidget, AdminSplitJalaliDateTime
+
 
 class PersonForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -13,6 +16,18 @@ class PersonForm(forms.ModelForm):
         self.request = kwargs.pop("request")  # store value of request
         print(self.request.user)
         super(PersonForm, self).__init__(*args, **kwargs)
+
+        self.fields['date_of_birth'] = JalaliDateField(label=_('تاریخ تولد'),  # date format is  "yyyy-mm-dd"
+                                                       widget=AdminJalaliDateWidget
+                                                       # optional, to use default datepicker
+                                                       )
+
+        self.fields['date_of_birth'].widget.attrs.update(
+            {'class': 'jalali_date-date block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                      'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                      'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                      'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                      'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'})
 
         # there's a `fields` property now
         # self.fields['name'].required = False
@@ -83,12 +98,12 @@ class PersonForm(forms.ModelForm):
             #                     'bg-white bg-clip-padding border border-solid border-gray-300 '
             #                     'rounded transition ease-in-out m-0 focus:text-gray-700 '
             #                     'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'date_of_birth': forms.TextInput(
-                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
-                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
-                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
-                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            # 'date_of_birth': forms.TextInput(
+            #     attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+            #                     'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+            #                     'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+            #                     'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+            #                     'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'place_of_birth': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
                                 'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
