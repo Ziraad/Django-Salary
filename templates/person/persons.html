@@ -273,19 +273,25 @@
                                             {% csrf_token %}
                                             <div>
                                                 {% if person.is_active == True %}
+                                                    <input type="hidden" name="p_code"
+                                                           value="{{ person.personnel_code }}">
+                                                    <input type="hidden" name="company" value="{{ person.company }}">
                                                     <button type="submit" name="deactivate"
-                                                            value="{{ person.personnel_code }}"
                                                             class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
                                                         عدم تایید
                                                     </button>
                                                 {% else %}
+                                                    <input type="hidden" name="p_code"
+                                                           value="{{ person.personnel_code }}">
+                                                    <input type="hidden" name="company" value="{{ person.company }}">
                                                     <button type="submit" name="activate"
-                                                            value="{{ person.personnel_code }}"
                                                             class="px-2 py-1 font-semibold leading-tight text-green-100 bg-green-600 rounded-full">
                                                         تایید
                                                     </button>
                                                 {% endif %}
-                                                <button type="submit" name="delete" value="{{ person.personnel_code }}"
+                                                <input type="hidden" name="p_code" value="{{ person.personnel_code }}">
+                                                <input type="hidden" name="company" value="{{ person.company }}">
+                                                <button type="submit" name="delete"
                                                         class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-700 rounded-full">
                                                     حذف
                                                 </button>

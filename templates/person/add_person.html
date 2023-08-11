@@ -60,7 +60,7 @@
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.first_name.label }}</div>
                         {{ form.first_name }}
-                        {#                        <span class="mt-1 text-xs text-red-500">{{ form.name.errors }}</span>#}
+                        <span class="mt-1 text-xs text-red-500">{{ form.first_name.errors }}</span>
                     </div>
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.last_name.label }}</div>
@@ -69,11 +69,12 @@
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.nation_code.label }}</div>
                         <div>{{ form.nation_code }}</div>
-                        {#                        <span class="mt-1 text-xs text-red-500">{{ form.object.errors }}</span>#}
+                        <span class="mt-1 text-xs text-red-500">{{ form.nation_code.errors }}</span>
                     </div>
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.personnel_code.label }}</div>
                         <div>{{ form.personnel_code }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.personnel_code.errors }}</span>
                     </div>
                 </div>
 
@@ -81,6 +82,7 @@
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.company.label }}</div>
                         <div>{{ form.company }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.company.errors }}</span>
                     </div>
                     {#                    <div>#}
                     {#                        <div class="mb-2 text-sm text-gray-500">{{ form.id_code.label }}</div>#}
@@ -89,14 +91,17 @@
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.date_of_birth.label }}</div>
                         <div>{{ form.date_of_birth }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.date_of_birth.errors }}</span>
                     </div>
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.place_of_birth.label }}</div>
                         <div>{{ form.place_of_birth }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.place_of_birth.errors }}</span>
                     </div>
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.father_name.label }}</div>
                         <div>{{ form.father_name }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.father_name.errors }}</span>
                     </div>
                 </div>
                 <div class="grid mb-4">
@@ -109,29 +114,27 @@
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.education_degree.label }}</div>
                         <div>{{ form.education_degree }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.education_degree.errors }}</span>
                     </div>
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.marital_status.label }}</div>
                         <div>{{ form.marital_status }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.marital_status.errors }}</span>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.number_of_children.label }}</div>
                         <div>{{ form.number_of_children }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.number_of_children.errors }}</span>
                     </div>
                     <div>
                         <div class="mb-2 text-sm text-gray-500">{{ form.account_number.label }}</div>
                         <div>{{ form.account_number }}</div>
+                        <span class="mt-1 text-xs text-red-500">{{ form.account_number.errors }}</span>
                     </div>
                 </div>
 
-                {#                                {% for field in form %}#}
-                {#                                    <div class="mb-2">#}
-                {#                                        {{ field.errors }}#}
-                {#                                        <span class="text-gray-600">{{ field.label_tag }}</span> {{ field }}#}
-                {#                                    </div>#}
-                {#                                {% endfor %}#}
                 <button type="submit"
                         class="w-full px-6 py-2.5 mt-4 bg-blue-600 text-white font-medium leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                     ثبت

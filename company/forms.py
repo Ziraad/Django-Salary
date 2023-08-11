@@ -30,14 +30,11 @@ class CompanyForm(forms.ModelForm):
 
         # you can added a "class" to this field for use your datepicker!
         self.fields['start_of_activity'].widget.attrs.update(
-            {'class': 'jalali_date-date block w-full px-3 py-1.5 text-base '
-                      'font-normal text-gray-700 '
-                      'bg-white bg-clip-padding border border-solid '
-                      'border-gray-300 '
-                      'rounded transition ease-in-out m-0 '
-                      'focus:text-gray-700 focus:text-base '
-                      'focus:bg-white focus:border-blue-600 '
-                      'focus:outline-none'})
+            {'class': 'jalali_date-date block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                      'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                      'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                      'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                      'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
 
         # self.fields['date_time'] = SplitJalaliDateTimeField(label=_('date time'),
         #                                                     widget=AdminSplitJalaliDateTime
@@ -77,29 +74,38 @@ class CompanyForm(forms.ModelForm):
         }
 
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                    'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                    'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                    'focus:bg-white focus:border-blue-600 focus:outline-none'}),
-            'company_type': forms.Select(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                         'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                         'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                         'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+            'name': forms.TextInput(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
+            'company_type': forms.Select(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'object': forms.TextInput(
                 attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
 
-            'address': forms.TextInput(attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                                       'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                                       'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                                       'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+            'address': forms.TextInput(
+                attrs={'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
+                                'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 bg-clip-padding '
+                                'border border-solid border-gray-300 rounded transition ease-in-out m-0 '
+                                'focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white focus:border-gray-900 '
+                                'focus:outline-none dark:focus:bg-gray-700 dark:focus:border-gray-700'}),
             'description': forms.Textarea(
                 attrs={'rows': 4, 'class': 'block w-full px-3 py-1.5 text-base font-normal text-gray-700 '
-                                           'bg-white bg-clip-padding border border-solid border-gray-300 '
-                                           'rounded transition ease-in-out m-0 focus:text-gray-700 '
-                                           'focus:bg-white focus:border-blue-600 focus:outline-none'}),
+                                           'bg-white dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700 '
+                                           'bg-clip-padding border border-solid border-gray-300 rounded transition '
+                                           'ease-in-out m-0 focus:text-gray-700 dark:focus:text-gray-400 focus:bg-white'
+                                           'focus:border-gray-900 focus:outline-none dark:focus:bg-gray-700 '
+                                           'dark:focus:border-gray-700'}),
 
         }
 

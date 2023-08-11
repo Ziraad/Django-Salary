@@ -41,7 +41,7 @@
             اضافه کردن شرکت جدید
         </h2>
 
-        <div class="block mx-auto m-6 p-6 border rounded-lg shadow-lg bg-white max-w-xl">
+        <div class="w-full block dark:focus:bg-gray-700 dark:focus:border-gray-800 dark:focus:text-gray-400 mx-auto m-6 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-800">
             <form class="w-full" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% if error %}
@@ -94,12 +94,6 @@
                     <div class="mb-2 text-sm text-gray-500">{{ form.description.label }}</div>
                     <div>{{ form.description }}</div>
                 </div>
-                {#                                {% for field in form %}#}
-                {#                                    <div class="mb-2">#}
-                {#                                        {{ field.errors }}#}
-                {#                                        <span class="text-gray-600">{{ field.label_tag }}</span> {{ field }}#}
-                {#                                    </div>#}
-                {#                                {% endfor %}#}
                 <button type="submit"
                         class="w-full px-6 py-2.5 mt-4 bg-blue-600 text-white font-medium leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                     ثبت

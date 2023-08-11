@@ -12,29 +12,31 @@ from django.template.defaulttags import register
 
 @login_required
 def persons(request):
-    all_person = Person.objects.filter(company__accountant=request.user)
+    all_person = Person.objects.filter(company__accountant=request.user).order_by('-created')
     context = {
         'persons': all_person,
     }
 
     if request.method == 'POST':
+        # print('request: ', request.POST.getlist)
         try:
-            person = Person.objects.filter(company__accountant=request.user)
+            company = request.POST['company']
+            person = Person.objects.filter(company__accountant=request.user, company__name__exact=company)
             if 'activate' in request.POST:
                 print('activate')
-                personnel_code = request.POST['activate']
+                personnel_code = request.POST['p_code']
                 get_person = get_object_or_404(person, personnel_code=personnel_code)
                 get_person.is_active = True
                 get_person.save()
             if 'deactivate' in request.POST:
                 print('deactivate')
-                personnel_code = request.POST['deactivate']
+                personnel_code = request.POST['p_code']
                 get_person = get_object_or_404(person, personnel_code=personnel_code)
                 get_person.is_active = False
                 get_person.save()
             if 'delete' in request.POST:
                 print('delete')
-                personnel_code = request.POST['delete']
+                personnel_code = request.POST['p_code']
                 # nation_code = request.POST['nation_code']
                 get_person = get_object_or_404(person, personnel_code=personnel_code)
                 get_person.delete()
@@ -52,13 +54,18 @@ def add_person(request):
     print('persons: ', persons)
     if request.method == 'POST':
         details = PersonForm(request.POST, request.FILES, request=request)
-        person = persons.filter(personnel_code=request.POST.get('personnel_code'))
-        print('person: ', person)
+        person_n_code = persons.filter(nation_code=request.POST['nation_code'], company=request.POST['company'])
+        person_p_code = persons.filter(personnel_code=request.POST['personnel_code'], company=request.POST['company'])
+        print('person: ', person_p_code)
 
         if details.is_valid():
             try:
-                if person.exists():
+                if person_n_code.exists():
+                    raise Exception('کد ملی تکراری است!')
+
+                if person_p_code.exists():
                     raise Exception('کد پرسنلی تکراری است!')
+
                 print('form is valid')
                 new_person = details.save(commit=False)
                 company_id = request.POST['company']

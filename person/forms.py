@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from company.models import Company
 from salary.models import Decree, TypeOfEmployment, SalaryReceipt
 from .models import Person
+from salary.views import represents_int
 
 from jalali_date.fields import JalaliDateField, SplitJalaliDateTimeField
 from jalali_date.widgets import AdminJalaliDateWidget, AdminSplitJalaliDateTime
@@ -36,10 +37,6 @@ class PersonForm(forms.ModelForm):
         # self.fields['address'].required = False
         # self.fields['description'].required = False
         self.fields['company'].queryset = Company.objects.filter(accountant=self.request.user)
-
-    def clean(self):
-        print(self.request.user)  # request now available here also
-        pass
 
     # specify the name of model to use
     class Meta:
@@ -144,33 +141,28 @@ class PersonForm(forms.ModelForm):
         }
 
     # authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all())
+    def clean(self):
+        print(self.request.user)  # request now available here also
 
-    # def clean(self):
-    #
-    #     # data from the form is fetched using super function
-    #     super(PersonForm, self).clean()
-    #
-    #     # extract the username and text field from the data
-    #     name = self.cleaned_data.get('name')
-    #     object_company = self.cleaned_data.get('object')
-    #
-    #     # conditions to be met for the name length
-    #     if len(name) < 2 or len(name) == 0:
-    #         self._errors['name'] = self.error_class([
-    #             'نام شرکت باید حداقل 2 کاراکتر باشد!'])
-    #     if len(name) > 50:
-    #         self._errors['name'] = self.error_class([
-    #             'نام شرکت باید از 50 کاراکتر کمتر باشد!'])
-    #
-    #     # conditions to be met for the object length
-    #     if len(object_company) < 2 or len(object_company) == 0:
-    #         self._errors['object'] = self.error_class([
-    #             'موضوع فعالیت شرکت باید حداقل 2 کاراکتر باشد!'])
-    #     if len(object_company) > 200:
-    #         self._errors['object'] = self.error_class([
-    #             'موضوع فعالیت شرکت باید کمتر از 200 کاراکتر باشد!'])
-    #
-    #     return self.cleaned_data
+        # data from the form is fetched using super function
+        super(PersonForm, self).clean()
+
+        nation_code = self.cleaned_data.get('nation_code')
+        number_of_children = self.cleaned_data.get('number_of_children')
+
+        if not represents_int(nation_code):
+            print('nation code not int')
+            self._errors['nation_code'] = self.error_class([
+                'فرمت کد ملی باید یک عدد صحیح باشد!'])
+        elif len(nation_code) < 10 or len(nation_code) > 10:
+            self._errors['nation_code'] = self.error_class([
+                'کد ملی باید 10 کاراکتر باشد!'])
+
+        if not represents_int(str(number_of_children)):
+            self._errors['number_of_children'] = self.error_class([
+                'فرمت تعداد فرزندان باید یک عدد صحیح باشد!'])
+
+        return self.cleaned_data
 
 
 class DecreeForm(forms.ModelForm):
